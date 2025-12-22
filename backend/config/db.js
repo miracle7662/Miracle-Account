@@ -5,7 +5,7 @@ const Database = require('better-sqlite3')
 // const db = new Database(path.join(__dirname, 'miresto.db'));
 //const db = new Database(path.join('F:','newmidb', 'newmidb.db'));
 
-const db = new Database(path.join('D:','Restaurant_Database', 'panmandi.db')); 
+const db = new Database(path.join('D:','Restaurant_Database', 'dbmiracle.db')); 
 
 //const db = new Database(path.join(__dirname, 'database.sqlite')) // Use relative path
 
