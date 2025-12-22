@@ -9,7 +9,7 @@ import {
 const CRM = () => {
   return (
     <>
-      <PageDashBreadcrumb title="Miracle Subji-Mandi" subName="Dashboards" />
+      <PageDashBreadcrumb title="Miracle Accounting Software" subName="Dashboards" />
       <Row className="g-3 g-md-4">
         <Col xl={12}>
           <CrmMiniCard />

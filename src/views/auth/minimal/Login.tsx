@@ -140,7 +140,7 @@ const Login = () => {
         height: '100vh',
         overflow: 'hidden'
       }}>
-        {/* Left Side - Subji Mandi ERP Branding */}
+        {/* Left Side - Miracle Accounts ERP Branding */}
         <div style={{
           width: '50%',
           background: 'linear-gradient(180deg, #FFF8E7 0%, #FFE4B5 100%)',
@@ -203,8 +203,8 @@ const Login = () => {
                 marginBottom: '0.3rem',
                 color: '#2E7D32'
               }}>
-                <span style={{ color: '#4CAF50' }}>Subji</span>{' '}
-                <span style={{ color: '#D32F2F' }}>Mandi</span>
+                <span style={{ color: '#4CAF50' }}>Miracle</span>{' '}
+                <span style={{ color: '#D32F2F' }}>Accounts</span>
               </h1>
               <p style={{ 
                 fontSize: '1.1rem', 
