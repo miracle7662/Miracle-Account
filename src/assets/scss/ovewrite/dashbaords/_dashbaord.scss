@@ -1,0 +1,16 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Dashbaord SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+#weeklyStatsChart {
+    .apexcharts-series {
+        &[seriesName=TotalxSales] path {
+            clip-path: inset(0% 0% -4px 0% round 4px);
+        }
+
+        &[seriesName=TotalxRevenue] {
+            transform: scaleY(1.05);
+        }
+    }
+}

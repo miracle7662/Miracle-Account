@@ -1,0 +1,18 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Authentication SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.auth-creative-layout {
+    @include media-breakpoint-up(lg) {
+        margin-left: -340px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+        margin-left: -400px;
+    }
+
+    @include media-breakpoint-up(xxxl) {
+        margin-left: -440px;
+    }
+}

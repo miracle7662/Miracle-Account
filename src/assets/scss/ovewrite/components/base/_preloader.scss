@@ -1,0 +1,20 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Preloader SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.preloader {
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 3px solid;
+    border-radius: 50%;
+    border-color: rgba(100, 120, 130, 0.15);
+    border-right-color: var(--#{$prefix}dark);
+    animation: spin 0.65s infinite linear;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn)
+    }
+}

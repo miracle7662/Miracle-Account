@@ -1,0 +1,12 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Typography Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+// html[data-theme-font="public"] {
+//     --#{$prefix}body-font-family: "Public Sans";
+// }
+
+html[data-theme-font='inter'] {
+  --#{$prefix}body-font-family: 'Inter';
+}

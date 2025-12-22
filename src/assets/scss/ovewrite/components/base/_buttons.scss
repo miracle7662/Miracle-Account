@@ -1,0 +1,279 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! BUTTONS SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@mixin button-variant($variant) {
+	--#{$prefix}btn-color: #{$white};
+	--#{$prefix}btn-hover-color: #{$white};
+	--#{$prefix}btn-active-color: #{$white};
+}
+
+@mixin button-variant-outline($variant) {
+	--#{$prefix}btn-color: #{$variant};
+	--#{$prefix}btn-hover-color: #{$white};
+	--#{$prefix}btn-active-color: #{$white};
+}
+
+@mixin button-variant-soft($variant) {
+	--#{$prefix}btn-color: #{$variant};
+	--#{$prefix}btn-bg: #{rgba($variant, 0.1)};
+	--#{$prefix}btn-border-color: #{transparent};
+	--#{$prefix}btn-hover-color: #{$white};
+	--#{$prefix}btn-hover-bg: #{$variant};
+	--#{$prefix}btn-hover-border-color: #{$variant};
+	--#{$prefix}btn-active-color: #{$white};
+	--#{$prefix}btn-active-bg: #{$variant};
+	--#{$prefix}btn-active-border-color: #{$variant};
+}
+
+@mixin button-variant-softline($variant) {
+	--#{$prefix}btn-color: #{$variant};
+	--#{$prefix}btn-bg: #{rgba($variant, 0.1)};
+	--#{$prefix}btn-border-color: #{$variant};
+	--#{$prefix}btn-hover-color: #{$white};
+	--#{$prefix}btn-hover-bg: #{$variant};
+	--#{$prefix}btn-hover-border-color: #{$variant};
+	--#{$prefix}btn-active-color: #{$white};
+	--#{$prefix}btn-active-bg: #{$variant};
+	--#{$prefix}btn-active-border-color: #{$variant};
+}
+
+@mixin button-variant-solidtext($variant) {
+	--#{$prefix}btn-color: #{$variant};
+	--#{$prefix}btn-bg: #{transparent};
+	--#{$prefix}btn-border-color: #{transparent};
+	--#{$prefix}btn-hover-color: #{$white};
+	--#{$prefix}btn-hover-bg: #{$variant};
+	--#{$prefix}btn-hover-border-color: #{$variant};
+	--#{$prefix}btn-active-color: #{$white};
+	--#{$prefix}btn-active-bg: #{$variant};
+	--#{$prefix}btn-active-border-color: #{$variant};
+}
+
+@mixin button-variant-softtext($variant) {
+	--#{$prefix}btn-color: #{$variant};
+	--#{$prefix}btn-bg: #{transparent};
+	--#{$prefix}btn-border-color: #{transparent};
+	--#{$prefix}btn-hover-color: #{$variant};
+	--#{$prefix}btn-hover-bg: #{rgba($variant, 0.1)};
+	--#{$prefix}btn-hover-border-color: #{transparent};
+	--#{$prefix}btn-active-color: #{$variant};
+	--#{$prefix}btn-active-bg: #{rgba($variant, 0.1)};
+	--#{$prefix}btn-active-border-color: #{transparent};
+}
+
+@mixin button-variant-softtextline($variant) {
+	--#{$prefix}btn-color: #{$variant};
+	--#{$prefix}btn-bg: #{transparent};
+	--#{$prefix}btn-border-color: #{transparent};
+	--#{$prefix}btn-hover-color: #{$variant};
+	--#{$prefix}btn-hover-bg: #{rgba($variant, 0.1)};
+	--#{$prefix}btn-hover-border-color: #{$variant};
+	--#{$prefix}btn-active-color: #{$variant};
+	--#{$prefix}btn-active-bg: #{rgba($variant, 0.1)};
+	--#{$prefix}btn-active-border-color: #{$variant};
+}
+
+@each $color,
+$value in $theme-colors {
+	.btn-#{$color} {
+		@include button-variant($value);
+	}
+
+	.btn-outline-#{$color} {
+		@include button-variant-outline($value);
+	}
+
+	.btn-soft-#{$color} {
+		@include button-variant-soft($value);
+	}
+
+	.btn-soft-outline-#{$color} {
+		@include button-variant-softline($value);
+	}
+
+	.btn-solidtext-#{$color} {
+		@include button-variant-solidtext($value);
+	}
+
+	.btn-softtext-#{$color} {
+		@include button-variant-softtext($value);
+	}
+
+	.btn-softtextline-outline-#{$color} {
+		@include button-variant-softtextline($value);
+	}
+}
+
+.btn {
+	align-items: center;
+	justify-content: center;
+	display: inline-flex;
+	--#{$prefix}btn-active-border-color: transparent;
+	--#{$prefix}btn-focus-shadow-rgb: none;
+
+	&.active {
+		--#{$prefix}btn-active-color: var(--#{$prefix}white);
+		--#{$prefix}btn-active-bg: var(--#{$prefix}primary);
+		--#{$prefix}btn-border-color: var(--#{$prefix}primary);
+	}
+
+	&-soft-light,
+	&-soft-outline-light {
+		--#{$prefix}btn-color: var(--#{$prefix}dark);
+		--#{$prefix}btn-hover-color: var(--#{$prefix}primary);
+		--#{$prefix}btn-active-color: var(--#{$prefix}primary);
+		--#{$prefix}btn-bg: var(--#{$prefix}tertiary-bg);
+		--#{$prefix}btn-hover-bg: var(--#{$prefix}tertiary-bg);
+		--#{$prefix}btn-active-bg: var(--#{$prefix}tertiary-bg);
+		--#{$prefix}btn-border-color: var(--#{$prefix}border-color);
+		--#{$prefix}btn-hover-border-color: var(--#{$prefix}border-color);
+		--#{$prefix}btn-active-border-color: var(--#{$prefix}border-color);
+		--#{$prefix}btn-disabled-bg: var(--#{$prefix}tertiary-bg);
+		--#{$prefix}btn-disabled-border-color: var(--#{$prefix}border-color);
+	}
+
+	&-light {
+		--#{$prefix}btn-color: var(--#{$prefix}dark);
+		--#{$prefix}btn-hover-color: var(--#{$prefix}dark);
+		--#{$prefix}btn-active-color: var(--#{$prefix}dark);
+		--#{$prefix}btn-bg: var(--#{$prefix}light-rgb);
+		--#{$prefix}btn-hover-bg: var(--#{$prefix}dark-bg-subtle);
+		--#{$prefix}btn-active-bg: var(--#{$prefix}dark-bg-subtle);
+		--#{$prefix}btn-border-color: transparent;
+		--#{$prefix}btn-hover-border-color: transparent;
+		--#{$prefix}btn-active-border-color: transparent;
+		--#{$prefix}btn-disabled-border-color: transparent;
+		--#{$prefix}btn-disabled-bg: var(--#{$prefix}tertiary-bg);
+	}
+
+	&-neutral {
+		--#{$prefix}btn-color: var(--#{$prefix}dark);
+		--#{$prefix}btn-bg: var(--#{$prefix}secondary-bg-subtle);
+		--#{$prefix}btn-hover-bg: var(--#{$prefix}secondary-bg-subtle);
+		--#{$prefix}btn-active-bg: var(--#{$prefix}secondary-bg-subtle);
+		--#{$prefix}btn-border-color: #{rgba($secondary, 0.1)};
+		--#{$prefix}btn-hover-border-color: #{rgba($secondary, 0.15)};
+		--#{$prefix}btn-active-border-color: #{rgba($secondary, 0.15)};
+	}
+
+	&-soft-dark,
+	&-outline-dark,
+	&-soft-outline-dark {
+		--#{$prefix}btn-color: var(--#{$prefix}dark);
+	}
+}
+
+@mixin btn-size($padding-y, $padding-x, $font-size, $border-radius) {
+	padding: $padding-y $padding-x;
+	border-radius: $border-radius;
+
+	.fi {
+		font-size: $font-size - 0.125rem;
+	}
+}
+
+$btn-sizes: (
+	"xs": ("padding-y": 0.15rem,
+		"padding-x": 0.5rem,
+		"font-size": $font-size-sm,
+		"border-radius": 0.2rem,
+		"icon-padding": 0.35rem,
+	),
+	"sm": ("padding-y": 0.4rem,
+		"padding-x": 0.65rem,
+		"font-size": $font-size-sm,
+		"border-radius": 0.2rem,
+		"icon-padding": 0.35rem,
+	),
+	"md": ("padding-y": 0.5rem,
+		"padding-x": 1rem,
+		"font-size": $font-size-md,
+		"border-radius": 0.25rem,
+		"icon-padding": 0.4rem,
+	),
+	"lg": ("padding-y": 0.625rem,
+		"padding-x": 1.25rem,
+		"font-size":$font-size-lg,
+		"border-radius": 0.3rem,
+		"icon-padding": 0.45rem,
+	),
+	"xl": ("padding-y": 0.75rem,
+		"padding-x": 1.5rem,
+		"font-size": $font-size-xl,
+		"border-radius": 0.4rem,
+		"icon-padding": 0.5rem,
+	),
+	"xxl": ("padding-y": 0.9rem,
+		"padding-x": 1.75rem,
+		"font-size": $font-size-xxl,
+		"border-radius": 0.5rem,
+		"icon-padding": 0.55rem,
+	),
+);
+
+@each $size,
+$values in $btn-sizes {
+	.btn-#{$size} {
+		@include btn-size(map-get($values, "padding-y"), map-get($values, "padding-x"), map-get($values, "font-size"), map-get($values, "border-radius"));
+	}
+
+	.btn-icon {
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0.4rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: $border-radius-pill;
+
+		&.btn-#{$size} {
+			$padding-y: map-get($values, "padding-y");
+			$padding-x: map-get($values, "padding-x");
+			$icon-padding: map-get($values, "icon-padding");
+			$icon-dimension: ($padding-y + $padding-x + 2 * $icon-padding);
+			padding: $icon-padding;
+			width: $icon-dimension;
+			height: $icon-dimension;
+		}
+
+	}
+}
+
+$brand-color: (
+	facebook: #3b5998,
+	twitter: #1da1f2,
+	instagram: #e4405f,
+	linkedin: #0e76a8,
+	youtube: #c4302b,
+	github: #1F2328,
+);
+
+// Mixin for brand colors
+@mixin social-brand-colors($color) {
+	background-color: $color !important;
+	border-color: $color !important;
+	color: $white !important;
+
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: darken($color, 10%) !important;
+		border-color: darken($color, 10%) !important;
+		color: $white !important;
+	}
+}
+
+// Generate social brand buttons
+@each $brand,
+$color in $brand-color {
+	.btn-#{$brand} {
+		@include social-brand-colors($color);
+
+	}
+
+	.text-#{$brand} {
+		color: $color !important;
+	}
+}

@@ -1,0 +1,84 @@
+/*!
+<--!----------------------------------------------------------------!-->
+<--!----------------------------------------------------------------!-->
+ * Template Name: Window - Admin & Dashboard Template
+ * Description: Fully Responsive Admin & Dashboard Template.
+ * Copyright: WRAPCODERS
+ * Author: WRAPCODERS
+ * Version: 1.0.0
+ * File: theme.scss
+<--!----------------------------------------------------------------!-->
+<--!----------------------------------------------------------------!-->
+*/
+
+// Google Font
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+// Core files
+@import './node_modules/bootstrap/scss/functions';
+
+@import 'theme/theme-variables';
+@import 'theme/theme-variables-custom';
+@import 'theme/theme-variables-dark';
+@import 'theme/theme-root';
+@import 'theme/theme-utilities';
+
+@import './node_modules/bootstrap/scss/bootstrap';
+
+// Structure
+@import 'structure/apps';
+@import 'structure/vertical-nav';
+@import 'structure/horizontal-nav';
+@import 'structure/header';
+@import 'structure/content';
+@import 'structure/footer';
+@import 'structure/megumenu';
+@import 'structure/livechat';
+
+// Options
+@import 'options/options';
+
+// Dashboard
+@import 'ovewrite/dashbaords/dashbaord';
+
+// Apps
+@import 'ovewrite/apps/calendar';
+
+// Pages
+@import 'ovewrite/pages/profile';
+@import 'ovewrite/pages/auth';
+
+// Components
+@import 'ovewrite/components/base/root';
+@import 'ovewrite/components/base/reboot';
+@import 'ovewrite/components/base/common';
+@import 'ovewrite/components/base/accordions';
+@import 'ovewrite/components/base/avatar';
+@import 'ovewrite/components/base/buttons';
+@import 'ovewrite/components/base/card';
+@import 'ovewrite/components/base/carousel';
+@import 'ovewrite/components/base/dropdown';
+@import 'ovewrite/components/base/modal';
+@import 'ovewrite/components/base/navtab';
+@import 'ovewrite/components/base/offcanvas';
+@import 'ovewrite/components/base/preloader';
+@import 'ovewrite/components/base/miscellaneous';
+@import 'ovewrite/components/icons/icons';
+@import 'ovewrite/components/tables/tables';
+@import 'ovewrite/components/charts/apexcharts';
+@import 'ovewrite/components/forms/adv-checks';
+@import 'ovewrite/components/forms/adv-radios';
+@import 'ovewrite/components/forms/adv-switches';
+@import 'ovewrite/components/forms/checks-radios';
+@import 'ovewrite/components/forms/nouislider';
+@import 'ovewrite/components/editors/quill';
+@import 'ovewrite/components/editors/tinymce';
+@import 'ovewrite/components/pickers/flatpickr';
+@import 'ovewrite/components/pickers/daterangepicker';
+@import 'ovewrite/components/maps/vector';
+@import 'ovewrite/components/extended/simplebar';
+@import 'ovewrite/components/extended/react-select';
+@import 'ovewrite/components/extended/sweetalert2';
+@import 'ovewrite/components/extended/slick-slider';
+@import 'ovewrite/components/extended/dropzone';

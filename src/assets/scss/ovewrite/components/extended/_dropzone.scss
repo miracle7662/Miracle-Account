@@ -1,0 +1,32 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Dropzone SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.dropzone {
+    flex: 1;
+    display: flex;
+    min-height: 300px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: $border-radius-sm;
+    border:1px dashed var(--#{$prefix}gray-300);
+    background-color: var(--#{$prefix}gray-100);
+    color: var(--#{$prefix}dark);
+    outline: none;
+    transition: border 0.24s ease-in-out;
+
+    &:focus {
+        border-color: var(--#{$prefix}primary);
+    }
+
+    .dropzone-content {
+        display: flex;
+        text-align: center;
+        -webkit-box-align: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}

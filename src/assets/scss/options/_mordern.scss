@@ -1,0 +1,69 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Modern Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-content-skin='modern'] {
+  body {
+    --#{$prefix}body-bg: var(--#{$prefix}body-bg-modern);
+  }
+
+  .leftside-menu {
+    border: 1px solid transparent !important;
+    box-shadow: var(--#{$prefix}box-shadow-leftside-menu);
+  }
+
+  .card,
+  .header-inner,
+  .header-public,
+  .topnav-content,
+  .dropdown-menu,
+  .accordion-item,
+  .flatpickr-calendar {
+    border: 1px solid transparent !important;
+    box-shadow: var(--#{$prefix}box-shadow-modern) !important;
+  }
+
+  &[data-navigation-type='horizontal'] {
+    body {
+      .header-inner {
+        box-shadow: none !important;
+      }
+
+      .topnav-content {
+        border-bottom: 1px solid transparent;
+        box-shadow: var(--#{$prefix}box-shadow-modern);
+      }
+    }
+  }
+
+  &[data-bs-theme='dark'] {
+    body {
+      --#{$prefix}body-bg: var(--#{$prefix}body-bg-modern-dark);
+    }
+
+    .leftside-menu {
+      border: 1px solid transparent !important;
+      box-shadow: var(--#{$prefix}box-shadow-leftside-menu-dark);
+    }
+
+    .card,
+    .header-inner,
+    .topnav-content,
+    .dropdown-menu,
+    .accordion-item {
+      box-shadow: var(--#{$prefix}box-shadow-modern-dark) !important;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  html[data-content-skin='modern'] {
+    .header-navbar {
+      .megamenu {
+        border: 1px solid transparent !important;
+        box-shadow: var(--#{$prefix}box-shadow-modern-revert);
+      }
+    }
+  }
+}

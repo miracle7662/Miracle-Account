@@ -1,0 +1,246 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! NavTab SCSS  !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+// Mixin for generating navigation light gray tabs
+@mixin nav-light-gray-tabs() {
+	.nav-light-gray-tabs {
+		.nav-link {
+			display: flex;
+			align-items: center;
+
+			&.active,
+			&.show,
+			&:hover:not(.disabled) {
+				color: var(--#{$prefix}dark);
+				background-color: var(--#{$prefix}gray-200);
+				transition: $transition-base;
+			}
+
+			&.disabled,
+			&:disabled {
+				color: var(--#{$prefix}nav-link-disabled-color) !important;
+				background-color: transparent !important;
+				border-color: transparent !important;
+			}
+		}
+	}
+}
+
+// Apply nav-light-gray-tabs mixin
+@include nav-light-gray-tabs();
+
+// Mixin for generating navigation line tabs
+@mixin nav-line-tabs() {
+	.nav-line-tabs {
+		border-bottom: 0.0625rem solid $border-color;
+
+		.nav-item {
+			margin-bottom: -0.0625rem;
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				border: 0;
+				border-bottom: 0.125rem solid transparent;
+				padding: 0.5rem 0;
+				margin: 0 1rem;
+				@include transition(color);
+
+				&.active,
+				&.show,
+				&:hover:not(.disabled) {
+					border: 0;
+					color: var(--#{$prefix}primary) !important;
+					background-color: transparent;
+					border-bottom: 0.125rem solid var(--#{$prefix}primary);
+					transition: $transition-base;
+				}
+
+				&.disabled,
+				&:disabled {
+					color: var(--#{$prefix}nav-link-disabled-color) !important;
+					background-color: transparent !important;
+					border-color: transparent !important;
+				}
+			}
+		}
+	}
+}
+
+// Apply nav-line-tabs mixin
+@include nav-line-tabs();
+
+// Mixin for generating theme variants
+@mixin generate-theme-variants($colors) {
+
+	@each $color,
+	$value in $colors {
+		.nav-theme-tabs-#{$color} {
+			.nav-link {
+				display: flex;
+				align-items: center;
+
+				&.active,
+				&.show,
+				&:hover:not(.disabled) {
+					color: $white;
+					background-color: $value;
+					border-color: $value;
+				}
+
+				&.disabled,
+				&:disabled {
+					color: var(--#{$prefix}nav-link-disabled-color) !important;
+					background-color: transparent !important;
+					border-color: transparent !important;
+				}
+			}
+
+			&.nav-line-tabs {
+				.nav-link {
+					display: flex;
+					align-items: center;
+					background-color: transparent;
+
+					&.active,
+					&.show,
+					&:hover:not(.disabled) {
+						color: $value !important;
+						background-color: transparent;
+						border-bottom-color: $value;
+					}
+
+					&.disabled,
+					&:disabled {
+						color: var(--#{$prefix}nav-link-disabled-color) !important;
+						background-color: transparent !important;
+						border-color: transparent !important;
+					}
+				}
+			}
+
+			.dropdown-menu {
+				.dropdown-item {
+
+					&.active,
+					&.show,
+					&:hover:not(.disabled) {
+						color: $white;
+						background-color: $value;
+						border-color: $value;
+					}
+
+					&.disabled,
+					&:disabled {
+						color: var(--#{$prefix}nav-link-disabled-color) !important;
+						background-color: transparent !important;
+						border-color: transparent !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Apply generate-theme-variants mixin
+@include generate-theme-variants($theme-colors);
+
+.nav-rich-content-tabs {
+	.nav-link {
+		border: 1px dashed transparent;
+		border-radius: $border-radius-sm;
+		transition: $transition-base;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		.nav-rich-content-icon {
+			display: block;
+			margin: 0 auto 0.75rem;
+		}
+
+		.nav-rich-content-title {
+			display: block;
+		}
+
+		.nav-rich-content-text {
+			display: block;
+			color: $gray-500;
+			font-size: $font-size-sm;
+			font-weight: $font-weight-medium;
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Mixin for generating rich content theme variants
+@mixin richcontent-theme-variants($colors) {
+
+	@each $color,
+	$value in $colors {
+		.nav-rich-content-tabs {
+			&.nav-rich-content-#{$color} {
+				.nav-link {
+
+					&.active,
+					&.show,
+					&:hover:not(.disabled) {
+						color: $value;
+						background-color: rgba($value, 15%);
+						border-color: rgba($value, 30%);
+
+						.nav-rich-content-title,
+						.nav-rich-content-text {
+							color: $value;
+						}
+					}
+				}
+
+				&.disabled,
+				&:disabled {
+					color: var(--#{$prefix}nav-link-disabled-color) !important;
+					background-color: transparent !important;
+					border-color: transparent !important;
+
+					.nav-rich-content-title,
+					.nav-rich-content-text {
+						color: var(--#{$prefix}nav-link-disabled-color) !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Apply richcontent-theme-variants mixin
+@include richcontent-theme-variants($theme-colors);
+
+
+.nav-withicon-tabs {
+	.nav-item {
+		.nav-link {
+			display: flex;
+			align-items: center;
+		}
+	}
+}
+
+.nav-pills-custom {
+	.nav-item {
+		.nav-link {
+			&.active {
+				color: var(--#{$prefix}primary);
+				background-color: var(--#{$prefix}expo-hover-bg);
+				border: 2px solid var(--#{$prefix}primary) !important;
+
+				span {
+					color: var(--#{$prefix}primary) !important;
+				}
+			}
+		}
+	}
+}
