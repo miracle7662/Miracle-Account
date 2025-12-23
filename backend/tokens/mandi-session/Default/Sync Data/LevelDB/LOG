@@ -1,4 +1,0 @@
-2025/12/08-21:02:49.009 1aa4 Creating DB D:\Github\MIPanMandi\backend\tokens\mandi-session\Default\Sync Data\LevelDB since it was missing.
-2025/12/08-21:02:49.023 1aa4 Reusing MANIFEST D:\Github\MIPanMandi\backend\tokens\mandi-session\Default\Sync Data\LevelDB/MANIFEST-000001
-2025/12/08-21:02:49.025 1aa4 Recovering log #3
-2025/12/08-21:02:49.025 1aa4 Reusing old log D:\Github\MIPanMandi\backend\tokens\mandi-session\Default\Sync Data\LevelDB/000003.log 
