@@ -1,0 +1,75 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! SweetAlert2 SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+div:where(.swal2-container) {
+    div:where(.swal2-actions) {
+        gap: 0.5rem !important;
+        margin: 1.25rem auto 1.5rem !important;
+    }
+
+    div:where(.swal2-popup) {
+        width: 32rem !important;
+        max-width: 100% !important;
+        color: var(--#{$prefix}dark) !important;
+        font-size: $font-size-base !important;
+        background: var(--#{$prefix}tertiary-bg) !important;
+
+        div:where(.swal2-footer) {
+            padding: 1.5rem 1.5rem 0.75rem !important;
+            border-color: var(--#{$prefix}border-color) !important;
+            margin: 2em 0 0;
+            font-size: $font-size-base !important;
+
+        }
+
+        div:where(.swal2-timer-progress-bar) {
+            background: var(--#{$prefix}primary) !important;
+        }
+
+        .swal2-html-container,
+        .swal2-content {
+            color: var(--#{$prefix}secondary-color) !important;
+        }
+
+        .h2:where(.swal2-title),
+        h2:where(.swal2-title) {
+            font-size: $font-size-lg !important;
+            padding: 2.5rem 1rem 0 !important;
+        }
+
+        .swal2-html-container {
+            font-size: $font-size-base !important;
+        }
+
+        button:where(.swal2-styled).swal2-confirm {
+            font-size: $font-size-base !important;
+            background-color: var(--#{$prefix}primary) !important;
+        }
+
+        button:where(.swal2-styled) {
+            margin: 0 !important;
+        }
+
+        button:focus:not(:focus-visible),
+        button:where(.swal2-close):focus {
+            box-shadow: none !important;
+        }
+    }
+
+    .swal2-toast {
+        div:where(.swal2-icon) {
+            margin: 0 0 !important;
+        }
+
+        .swal2-title {
+            font-size: $font-size-base !important;
+            padding: 0 0 !important;
+        }
+
+        &.swal2-popup {
+            box-shadow: $dropdown-box-shadow;
+        }
+    }
+}

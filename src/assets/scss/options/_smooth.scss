@@ -1,0 +1,14 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Smooth Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-content-skin="smooth"] {
+    body {
+        background-color: var(--#{$prefix}tertiary-bg);
+    }
+
+    .dropdown-menu {
+        box-shadow: none;
+    }
+}

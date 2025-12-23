@@ -1,0 +1,69 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Shadow Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+html[data-content-skin='shadow'] {
+  body {
+    --#{$prefix}body-bg: var(--#{$prefix}body-bg-smooth);
+  }
+
+  .card,
+  .header-inner,
+  .topnav-content,
+  .leftside-menu {
+    box-shadow: $card-box-shadow;
+  }
+
+  .dropdown-menu {
+    box-shadow: $dropdown-box-shadow;
+  }
+
+  &[data-navigation-type='horizontal'] {
+    body {
+      .header-inner {
+        box-shadow: none;
+      }
+
+      .topnav-content {
+        box-shadow: $card-box-shadow;
+      }
+    }
+  }
+
+  &[data-bs-theme='dark'] {
+    body {
+      --#{$prefix}body-bg: var(--#{$prefix}tertiary-bg);
+    }
+
+    .card,
+    .header-inner,
+    .topnav-content,
+    .leftside-menu,
+    .dropdown-menu {
+      border: none !important;
+      box-shadow: $card-box-shadow-dark;
+    }
+
+    &[data-navigation-type='horizontal'] {
+      body {
+        .header-navbar {
+          .header-inner {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  html[data-content-skin='shadow'] {
+    .header-navbar {
+      .megamenu {
+        box-shadow: $card-box-shadow;
+      }
+    }
+  }
+}

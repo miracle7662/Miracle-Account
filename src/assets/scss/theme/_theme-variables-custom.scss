@@ -1,0 +1,50 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Custom Variable !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+// Boxed Layout
+$boxed-layout-width: 1440px;
+
+// Left Sidebar
+$leftbar-width: var(--#{$prefix}leftbar-width);
+$leftbar-width-md: var(--#{$prefix}leftbar-width-md);
+$leftbar-width-sm: var(--#{$prefix}leftbar-width-sm);
+$leftbar-iconbar-height: var(--#{$prefix}leftbar-iconbar-height);
+
+// Common Sidebar
+$sidebar-width-sm: var(--#{$prefix}sidebar-width-sm);
+$sidebar-width-md: var(--#{$prefix}sidebar-width-md);
+$sidebar-width-lg: var(--#{$prefix}sidebar-width-lg);
+
+// Navigation Menu
+$menu-item-icon-size: var(--#{$prefix}menu-item-icon-size);
+$menu-item-icon-width: var(--#{$prefix}menu-item-icon-width);
+$menu-item-font-size: var(--#{$prefix}menu-item-font-size);
+$menu-item-padding-x: var(--#{$prefix}menu-item-padding-x);
+$menu-item-padding-y: var(--#{$prefix}menu-item-padding-y);
+$menu-dot-color: var(--#{$prefix}menu-dot-color);
+$menu-item-color: var(--#{$prefix}menu-item-color);
+$menu-item-hover-color: var(--#{$prefix}menu-item-hover-color);
+$menu-item-active-color: var(--#{$prefix}menu-item-active-color);
+$menu-item-active-bg: var(--#{$prefix}menu-item-active-bg);
+$menu-iconbar-link-bg: var(--#{$prefix}menu-iconbar-link-bg);
+
+// Topbar
+$navbar-height: var(--#{$prefix}navbar-height);
+$header-height: var(--#{$prefix}header-height);
+$header-bg: var(--#{$prefix}header-bg);
+$header-item-color: var(--#{$prefix}header-item-color);
+$header-item-hover-color: var(--#{$prefix}menu-item-hover-color);
+$header-search-bg: var(--#{$prefix}header-search-bg);
+
+// Box Shadow
+$card-box-shadow: 0 4px 20px rgba(100, 100, 115, 0.1);
+$card-box-shadow-revert: 0 -4px 20px rgba(100, 100, 115, 0.1);
+$card-box-shadow-dark: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+// Transform
+$transform-translate-3d-0: translate3d(0, 0, 0);
+$transform-translate-3d-100: translate3d(100%, 0, 0);
+$transform-translate-3d--100: translate3d(-100%, 0, 0);

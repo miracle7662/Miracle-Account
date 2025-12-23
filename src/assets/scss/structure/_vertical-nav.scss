@@ -1,0 +1,550 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Vertical Nav !-->
+<--!----------------------------------------------------------------!-->
+*/
+.barnd-logo {
+  display: flex;
+  align-items: center;
+  transition: $transition-base;
+
+  .logo-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--#{$prefix}primary);
+
+    svg {
+      margin-bottom: initial;
+    }
+  }
+
+  .logo-text {
+    line-height: normal;
+    padding-left: 0.5rem;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    font-family: 'Inter', 'Public Sans', sans-serif;
+    color: var(--#{$prefix}dark);
+  }
+}
+
+.leftside-menu {
+  width: $leftbar-width;
+  min-width: $leftbar-width;
+  border-right: 1px solid var(--#{$prefix}border-color);
+  background-color: var(--#{$prefix}tertiary-bg);
+  transition: $transition-base;
+  // margin-left: 1.5rem;
+  // margin-top: 1rem;
+  // margin-bottom: 1rem;
+  // border-radius: $border-radius-md;
+
+  .navigation-header {
+    display: flex;
+    align-items: center;
+    height: $header-height;
+  }
+
+  .side-nav {
+    padding-left: 0;
+    list-style-type: none;
+
+    ul {
+      list-style-type: none;
+    }
+
+    .nav-link {
+      display: block;
+      list-style: none;
+      position: relative;
+      white-space: nowrap;
+      color: $menu-item-color;
+      transition: $transition-base;
+      font-size: $menu-item-font-size;
+      font-weight: $font-weight-medium;
+      padding: $menu-item-padding-y $menu-item-padding-x;
+      border-radius: $border-radius-sm;
+      margin: 0.25rem 0.75rem;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $menu-item-hover-color;
+        text-decoration: none;
+      }
+
+      i {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        font-size: $menu-item-icon-size;
+        line-height: $menu-item-icon-size;
+        width: $menu-item-icon-width;
+      }
+
+      span {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .menu-arrow {
+      display: inline-block;
+      text-rendering: auto;
+      position: absolute;
+      top: 50%;
+      right: calc($menu-item-padding-x * 1.5);
+      transition: transform 0.15s;
+      transform: translate(-50%, -50%);
+      line-height: $menu-item-icon-size;
+      font-size: calc($menu-item-font-size * 1.15);
+
+      &:before {
+        content: '\f138';
+        font-weight: normal;
+        font-family: 'uicons-regular-rounded';
+      }
+    }
+
+    .nav-sub-menu {
+      .menu-arrow {
+        right: calc($menu-item-padding-x * 2.5);
+      }
+    }
+
+    .nav-title {
+      margin-top: 1.5rem;
+      pointer-events: none;
+      cursor: default;
+      white-space: nowrap;
+      letter-spacing: 1px;
+      position: relative;
+      text-transform: uppercase;
+      color: var(--#{$prefix}gray-500);
+      font-weight: $font-weight-semibold;
+      font-size: calc($menu-item-font-size * 0.8);
+      padding: $menu-item-padding-y 1.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      > a[aria-expanded='true'] {
+        > span.menu-arrow {
+          transform: translate(-50%, -50%) rotate(90deg);
+        }
+      }
+
+      &.active {
+        > a:not(.collapsed) {
+          > span.menu-arrow {
+            transform: translate(-50%, -50%) rotate(90deg);
+          }
+        }
+      }
+    }
+
+    .active {
+      > a {
+        color: $menu-item-active-color;
+        font-weight: $font-weight-medium;
+        background-color: $menu-item-active-bg;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $menu-item-active-color;
+        }
+      }
+
+      .active {
+        .active {
+          color: $menu-item-active-color;
+          font-weight: $font-weight-medium;
+          background-color: transparent;
+        }
+      }
+    }
+
+    &.bottom {
+      bottom: 0;
+      width: 100%;
+      position: absolute;
+    }
+  }
+
+  .nav-sub-menu {
+    margin-top: calc($menu-item-padding-y * 1);
+    margin-bottom: calc($menu-item-padding-y * 1);
+    padding-left: calc($menu-item-icon-width * 1.7);
+
+    li,
+    .nav-item {
+      padding: 0;
+
+      a,
+      .nav-link {
+        white-space: nowrap;
+        color: $menu-item-color;
+        display: block;
+        position: relative;
+        transition: $transition-base;
+        font-weight: $font-weight-medium;
+        font-size: calc($menu-item-font-size * 1);
+        padding: calc($menu-item-padding-y * 0.75) calc($menu-item-padding-x * 1.25);
+        margin: 0 0;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          color: $menu-item-hover-color;
+
+          &:before {
+            background: $menu-item-hover-color;
+          }
+        }
+
+        &:before {
+          position: absolute;
+          content: '';
+          width: 5px;
+          height: 5px;
+          background: $menu-dot-color;
+          border-radius: 50%;
+          transform: translate(-18px, 10px);
+          transition: $transition-base;
+        }
+
+        span {
+          margin-left: 0;
+        }
+      }
+
+      &.active {
+        > a {
+          color: $menu-item-active-color;
+
+          &:hover,
+          &:focus,
+          &:active {
+            color: $menu-item-active-color;
+          }
+        }
+      }
+    }
+
+    .nav-sub-menu {
+      padding-left: calc($menu-item-icon-width * 0.65);
+    }
+  }
+
+  .nav-card {
+    box-shadow: none !important;
+    background-color: $menu-item-active-bg;
+    border-color: $menu-item-active-bg;
+  }
+}
+
+html[data-sidenav-size='iconbar']:not([data-navigation-type='horizontal']) {
+  .wrapper {
+    .nav-title {
+      &:before {
+        position: absolute;
+        width: -webkit-fill-available;
+        background: var(--#{$prefix}tertiary-bg);
+        height: 1rem;
+        padding: 0 1.5rem;
+        content: '\f70e';
+        color: $text-muted;
+        font-family: uicons-regular-rounded !important;
+      }
+    }
+
+    .leftside-menu {
+      width: $leftbar-width-sm;
+      min-width: $leftbar-width-sm;
+
+      .simplebar-mask,
+      .simplebar-content-wrapper {
+        .nav-card {
+          display: none;
+        }
+      }
+
+      .simplebar-offset {
+        bottom: 0 !important;
+      }
+
+      .barnd-logo {
+        justify-content: center;
+
+        .logo-text {
+          display: none;
+        }
+      }
+
+      // Sidebar Menu
+      .side-nav {
+        .collapse,
+        .collapsing {
+          display: none;
+          height: inherit !important;
+          transition: $transition-base;
+        }
+
+        .nav-item {
+          position: relative;
+
+          .nav-link {
+            margin: 0 0.75rem;
+            padding: calc($menu-item-padding-y + 6px) $menu-item-padding-x;
+
+            i {
+              min-width: calc($leftbar-width-sm - calc($menu-item-padding-x * 5));
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+              color: $menu-item-hover-color;
+            }
+
+            span {
+              visibility: hidden;
+            }
+
+            .menu-arrow {
+              transform: translate(-50%, -50%) rotate(0deg);
+              padding-left: 0 !important;
+            }
+          }
+        }
+      }
+
+      // Sidebar Menu Hover
+      &:hover {
+        width: $leftbar-width;
+        min-width: $leftbar-width;
+
+        .nav-title {
+          display: block;
+
+          &:before {
+            content: none;
+          }
+        }
+
+        .simplebar-mask,
+        .simplebar-content-wrapper {
+          .nav-card {
+            display: block;
+          }
+        }
+
+        .barnd-logo {
+          justify-content: start;
+
+          .logo-text {
+            display: block;
+          }
+        }
+
+        .side-nav {
+          .nav-item {
+            .nav-link {
+              padding: $menu-item-padding-y $menu-item-padding-x;
+
+              span {
+                visibility: visible;
+              }
+
+              i {
+                min-width: auto;
+              }
+            }
+
+            > a[aria-expanded='true'] {
+              > span.menu-arrow {
+                transform: translate(-50%, -50%) rotate(90deg);
+              }
+            }
+
+            &.active {
+              > a:not(.collapsed) {
+                > span.menu-arrow {
+                  transform: translate(-50%, -50%) rotate(90deg);
+                }
+              }
+            }
+          }
+
+          .collapse.show,
+          .collapsing.show {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+html[data-sidenav-size='compact']:not([data-navigation-type='horizontal']) {
+  .wrapper {
+    .nav-title {
+      &:before {
+        position: absolute;
+        width: -webkit-fill-available;
+        background: var(--#{$prefix}tertiary-bg);
+        height: 1rem;
+        padding: 0 1.5rem;
+        margin-right: 2.25rem;
+        content: '\f70e';
+        color: $text-muted;
+        font-family: uicons-regular-rounded !important;
+      }
+    }
+
+    .leftside-menu {
+      width: $leftbar-width-md;
+      min-width: $leftbar-width-md;
+
+      .simplebar-mask,
+      .simplebar-content-wrapper {
+        .nav-card {
+          display: none;
+        }
+      }
+
+      .barnd-logo {
+        justify-content: center;
+
+        .logo-icon {
+          display: none;
+        }
+      }
+
+      .side-nav {
+        .nav-title {
+          text-align: center;
+          padding: $menu-item-padding-y calc($menu-item-padding-x);
+        }
+
+        .nav-item {
+          text-align: center;
+          padding: $menu-item-padding-y calc($menu-item-padding-x * 1.5);
+        }
+
+        .nav-link {
+          padding: $menu-item-padding-y $menu-item-padding-x;
+          text-align: center;
+
+          i {
+            display: block;
+            text-align: center;
+            margin: 0 0 calc($menu-item-padding-y * 1 / 3);
+            width: auto;
+          }
+
+          span {
+            margin-left: 0;
+          }
+        }
+
+        .nav-sub-menu {
+          padding: 0;
+
+          .menu-arrow {
+            display: inline-block;
+            right: $menu-item-padding-x;
+          }
+
+          li {
+            a,
+            .nav-link {
+              padding: calc($menu-item-padding-y * 0.8) calc($menu-item-padding-x);
+              text-align: center;
+
+              &:before {
+                content: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .menu-arrow {
+      display: none;
+    }
+  }
+}
+
+html[data-sidenav-size='detach']:not([data-navigation-type='horizontal']) {
+  .wrapper {
+    .leftside-menu {
+      margin: 1rem 1rem;
+      border-radius: $border-radius-md;
+    }
+  }
+}
+
+html[data-sidenav-size='full']:not([data-navigation-type='horizontal']) {
+  .leftside-menu {
+    margin-left: calc($leftbar-width * -1);
+    border-color: transparent;
+    opacity: 0;
+  }
+
+  &.sidebar-enable {
+    .leftside-menu {
+      opacity: 1;
+      z-index: 1055 !important;
+      margin-left: 0;
+    }
+  }
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Sidenav Dark Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-navigation-skin='dark'],
+html[data-bs-theme='dark'] {
+  .leftside-menu {
+    background-color: var(--#{$prefix}tertiary-bg-dark) !important;
+    border-color: $gray-dark-200 !important;
+
+    .barnd-logo {
+      .logo-text {
+        color: var(--#{$prefix}white);
+      }
+    }
+  }
+
+  .topnav-content {
+    background-color: var(--#{$prefix}tertiary-bg-dark) !important;
+    border-color: $gray-dark-200;
+
+    .dropdown {
+      .dropdown-menu {
+        background-color: var(--#{$prefix}tertiary-bg-dark) !important;
+        border-color: $gray-dark-200 !important;
+      }
+    }
+  }
+}
+
+html[data-navigation-skin='dark'][data-sidenav-size='iconbar']:not(
+    [data-navigation-type='topnav']
+  ) {
+  .wrapper {
+    .nav-title {
+      &:before {
+        background-color: var(--#{$prefix}tertiary-bg-dark) !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! REBOOT SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+// Links
+a {
+  font-weight: $font-weight-medium;
+}
+
+// Focus
+:focus-visible {
+  outline: none;
+}
+
+// Tables
+table {
+  white-space: nowrap;
+}
+
+// Cursor
+.cursor-pointer {
+  cursor: pointer;
+}

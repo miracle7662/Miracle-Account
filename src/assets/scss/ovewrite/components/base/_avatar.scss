@@ -1,0 +1,193 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Avatars SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+// Sass Mixin
+@mixin avatar($size) {
+    width: map-get($avatar-sizes, $size);
+    height: map-get($avatar-sizes, $size);
+    font-size: map-get($avatar-font-sizes, $size);
+    border-radius: $border-radius-pill;
+}
+
+// Avatar Sizes
+$avatar-sizes: (
+    "xs": 1.5rem,
+    "sm": 1.875rem,
+    "md": 2.5rem,
+    "lg": 3rem,
+    "xl": 3.5rem,
+    "xxl": 4.25rem,
+    "xxxl": 5.25rem,
+);
+
+// Avatar Font Sizes
+$avatar-font-sizes: (
+    "xs": 0.875rem,
+    "sm": 0.875rem,
+    "md": 1rem,
+    "lg": 1.25rem,
+    "xl": 1.75rem,
+    "xxl": 2rem,
+    "xxxl": 2.75rem,
+);
+
+// Avatar Styles
+.avatar {
+
+    @each $size,
+    $value in $avatar-sizes {
+        &.avatar-#{$size} {
+            @include avatar($size);
+
+            .fi {
+                line-height: 0;
+                font-size: map-get($avatar-font-sizes, $size);
+            }
+        }
+    }
+
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius-pill;
+    transition: $transition-base;
+
+    img {
+        height: 100%;
+        max-width: 100%;
+        border-radius: $border-radius-pill;
+    }
+
+    .avatar-text {
+        padding: 0.4rem;
+    }
+
+    .avatar-status {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 0.65rem;
+        height: 0.65rem;
+        border-radius: 50%;
+        visibility: visible !important;
+        border: 2px solid var(--#{$prefix}tertiary-bg);
+
+        &.busy {
+            background-color: $warning;
+        }
+
+        &.online {
+            background-color: $success;
+        }
+
+        &.offline {
+            background-color: $secondary;
+        }
+
+        &.inactive {
+            background-color: $danger;
+        }
+
+        &.invisible {
+            background-color: $black;
+        }
+
+        &.always {
+            background-color: $info;
+        }
+    }
+}
+
+// Avatar Group
+.avatar-group {
+    display: flex;
+    justify-content: flex-start;
+
+    .avatar:hover {
+        z-index: 1;
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    &.avatar-group-xs {
+        .avatar {
+            margin-right: -0.65rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.avatar-group-sm {
+        .avatar {
+            margin-right: -0.75rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.avatar-group-md {
+        .avatar {
+            margin-right: -1rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.avatar-group-lg {
+        .avatar {
+            margin-right: -1.25rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.avatar-group-xl {
+        .avatar {
+            margin-right: -1.75rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.avatar-group-xxl {
+        .avatar {
+            margin-right: -2.5rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.avatar-group-xxxl {
+        .avatar {
+            margin-right: -2.5rem;
+            border: 0.2rem solid var(--#{$prefix}tertiary-bg);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

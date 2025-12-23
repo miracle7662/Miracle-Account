@@ -1,0 +1,115 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Dropdowns SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+$dropdown-sizes: (
+  sm: 9.375rem,
+  md: 15.625rem,
+  lg: 18.75rem,
+  xl: 21.875rem,
+  xxl: 25rem,
+  default: 12rem,
+);
+
+@mixin dropdown-sizes($size) {
+  width: map-get($dropdown-sizes, $size);
+  min-width: map-get($dropdown-sizes, $size);
+
+  .dropdown-item {
+    @if $size ==sm {
+      font-size: $font-size-sm;
+      padding: 0.375rem 0.75rem;
+    } @else {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+@mixin dropdown-solid-styles($variant) {
+  $color: map-get($theme-colors, $variant);
+  $hover-color: lighten($color, 10%);
+
+  .dropdown-#{$variant} {
+    .dropdown-menu {
+      background-color: $color;
+      border-color: lighten($color, 5%);
+
+      .dropdown-item {
+        color: $white;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $white;
+          background-color: $hover-color;
+        }
+      }
+
+      .dropdown-divider {
+        border-color: lighten($color, 5%);
+      }
+    }
+  }
+}
+
+@mixin dropdown-soft-styles($variant) {
+  $color: map-get($theme-colors, $variant);
+
+  .dropdown-soft-#{$variant} {
+    .dropdown-menu {
+      background-color: tint-color($color, 90%);
+      border-color: tint-color($color, 85%);
+
+      .dropdown-item {
+        color: $color;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $color;
+          background-color: tint-color($color, 80%);
+        }
+      }
+
+      .dropdown-divider {
+        border-color: tint-color($color, 85%);
+      }
+    }
+  }
+}
+
+@each $size, $width in $dropdown-sizes {
+  .dropdown-menu {
+    // box-shadow: var(--#{$prefix}box-shadow-modern);
+    @include dropdown-sizes(default);
+
+    &.dropdown-#{$size} {
+      @include dropdown-sizes($size);
+    }
+  }
+}
+
+@each $variant, $color in $theme-colors {
+  @include dropdown-solid-styles($variant);
+}
+
+@each $variant, $color in $theme-colors {
+  @include dropdown-soft-styles($variant);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.125rem;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-sm;
+  transition: $transition-base;
+}
+
+// Dropdown arrow hide
+.arrow-none {
+  &:after {
+    display: none;
+  }
+}

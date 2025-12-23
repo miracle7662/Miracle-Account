@@ -1,0 +1,34 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Checks Radios SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@mixin form-check-state($state, $bg-color, $border-color: $bg-color) {
+	$bg-soft-color: rgba($bg-color, 15%);
+
+	// Solid Color
+	input[type="checkbox"].form-check-input.form-check-#{$state},
+	input[type="radio"].form-check-input.form-radio-#{$state} {
+		&:checked {
+			background-color: $bg-color;
+			border-color: $border-color;
+		}
+	}
+
+	// Soft Color
+	input[type="checkbox"].form-check-input.form-check-soft-#{$state},
+	input[type="radio"].form-check-input.form-radio-soft-#{$state} {
+		border-color: transparent;
+		background-color: $bg-soft-color;
+
+		&:checked {
+			background-color: $bg-color;
+			border-color: $border-color;
+		}
+	}
+}
+
+@each $state,
+$color in $theme-colors {
+	@include form-check-state($state, $color);
+}

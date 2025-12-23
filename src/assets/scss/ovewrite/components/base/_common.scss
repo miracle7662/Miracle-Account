@@ -1,0 +1,104 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! COMMONS SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+// ICONS SCSS
+.fi {
+    line-height: 0;
+    font-size: $font-size-md;
+
+    &:before {
+        line-height: 1;
+    }
+}
+
+// BG-GRADINET SCSS
+.brand-gradient-bg {
+    background-image: radial-gradient(circle, $white, #f4f6fb, #e7eef6, #d7e7f0, #d8e9ee);
+}
+
+
+// ANIMATION INFINITE
+.animation-infinite {
+    animation: animation-infinite 1.5s infinite;
+
+    @keyframes animation-infinite {
+        0% {
+            box-shadow: 0 0 0 0 $gray-300;
+        }
+
+        100% {
+            box-shadow: 0 0 0 1.5rem transparent;
+        }
+    }
+}
+
+// LIST HORIZONTAL
+dl.dl-horizontal {
+    display: grid;
+    grid-template-columns: 9.375rem auto;
+
+    dt {
+        grid-column-start: 1;
+        margin-bottom: 1.25rem;
+        font-weight: $font-weight-semibold;
+    }
+
+    dd {
+        grid-column-start: 2;
+        margin-bottom: 1.25rem;
+    }
+}
+
+// UPLOAD IMAGES
+.upload-button {
+    opacity: 0;
+    transition: $transition-base;
+
+    &:hover {
+        opacity: 1;
+        visibility: visible;
+        transition: $transition-base;
+        background: var(--#{$prefix}tertiary-bg);
+    }
+}
+
+// SCROLLBAR SCSS
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: $border-radius-xl;
+    transition: $transition-base;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--#{$prefix}body-bg);
+    border-radius: $border-radius-xl;
+    transition: $transition-base;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--#{$prefix}gray-500);
+    border-radius: $border-radius-xl;
+    transition: $transition-base;
+}
+
+::-webkit-scrollbar-thumb {
+    &:hover {
+        background-color: shade-color($gray-500, 10%);
+        transition: $transition-base;
+    }
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! DARK MODE SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-bs-theme="dark"] {
+    .brand-gradient-bg {
+        background-image: radial-gradient(circle, #6c757d, #495057, #343a40, #212529, #000);
+    }
+}

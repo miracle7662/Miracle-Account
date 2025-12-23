@@ -1,0 +1,69 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! React Selects SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.select__control {
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+    border-color: var(--#{$prefix}border-color) !important;
+
+    &:hover,
+    &.select__control--is-focused {
+        box-shadow: $input-btn-focus-box-shadow;
+        border-color: var(--#{$prefix}primary) !important;
+        transition: $transition-base;
+    }
+
+    .select__input-container,
+    .select__single-value,
+    .select__multi-value__label {
+        color: var(--#{$prefix}dark) !important;
+    }
+
+    .select__value-container--is-multi {
+        .select__multi-value {
+            background-color: var(--#{$prefix}dark-bg-subtle) !important;
+        }
+    }
+
+    .select__indicator-separator {
+        display: none !important;
+    }
+}
+
+.select__indicator-separator {
+    background-color: var(--#{$prefix}gray-300) !important;
+}
+
+.select__menu {
+    box-shadow: none !important;
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+    border: 1px solid var(--#{$prefix}border-color) !important;
+
+    .select__menu-list {
+        padding: 0.5rem 0.5rem !important;
+
+        .select__option {
+            cursor: pointer;
+            margin-bottom: 0.15rem;
+            border-radius: $border-radius-sm !important;
+            transition: $transition-base;
+
+            &.select__option--is-selected {
+                background-color: var(--#{$prefix}primary) !important;
+            }
+
+            &.select__option--is-focused {
+                background-color: var(--#{$prefix}secondary-bg-subtle) !important;
+
+                &.select__option--is-selected {
+                    background-color: var(--#{$prefix}primary) !important;
+                }
+            }
+
+            &:hover {
+                background-color: var(--#{$prefix}secondary-bg-subtle) !important;
+            }
+        }
+    }
+}
