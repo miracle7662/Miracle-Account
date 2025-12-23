@@ -14,7 +14,7 @@
 // Core files - @use rules must come first
 @use './node_modules/bootstrap/scss/functions' as *;
 @use './node_modules/bootstrap/scss/mixins' as *;
-@use 'theme/theme-variables' as *;
+@use 'theme/_theme-variables' as *;
 @use 'theme/theme-variables-custom' as *;
 @use 'theme/theme-variables-dark' as *;
 @use 'theme/theme-root' as *;
