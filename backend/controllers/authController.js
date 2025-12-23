@@ -63,13 +63,13 @@ exports.login = async (req, res) => {
 
         // Get user's accessible companies
         let userCompanies = [];
-        if (user.role_level === 'superadmin') {
+        if (user.role_level === 'SUPER_ADMIN') {
             // SuperAdmin can access all companies
             userCompanies = db.prepare(`
                 SELECT
                     c.companyid,
                     c.company_name,
-                    'owner' as role_in_company,
+                    'OWNER' as role_in_company,
                     y.yearid,
                     y.Year as year_name,
                     y.Startdate,
@@ -143,7 +143,7 @@ exports.selectCompany = (req, res) => {
 
         // Verify user has access to this company
         let hasAccess = false;
-        if (user.role_level === 'superadmin') {
+        if (user.role_level === 'SUPER_ADMIN') {
             hasAccess = true;
         } else {
             const accessCheck = db.prepare(`
@@ -210,13 +210,13 @@ exports.getUserCompanies = (req, res) => {
         const user = req.user; // From JWT middleware
 
         let userCompanies = [];
-        if (user.role_level === 'superadmin') {
+        if (user.role_level === 'SUPER_ADMIN') {
             // SuperAdmin can access all companies
             userCompanies = db.prepare(`
                 SELECT
                     c.companyid,
                     c.company_name,
-                    'owner' as role_in_company,
+                    'OWNER' as role_in_company,
                     y.yearid,
                     y.Year as year_name,
                     y.Startdate,
@@ -326,7 +326,7 @@ exports.verifyF8Password = async (req, res) => {
         }
 
         // Allow only admins to perform this action
-        if (user.role_level !== 'admin' && user.role_level !== 'superadmin') {
+        if (user.role_level !== 'ADMIN' && user.role_level !== 'SUPER_ADMIN') {
             return res.status(403).json({ success: false, message: 'Permission denied. Only admins can perform this action.' });
         }
 
@@ -408,7 +408,7 @@ exports.verifyBillCreatorPassword = async (req, res) => {
         }
 
         // If the current user is an admin, try their password first.
-        if (currentUser.role_level === 'admin' || currentUser.role_level === 'superadmin') {
+        if (currentUser.role_level === 'ADMIN' || currentUser.role_level === 'SUPER_ADMIN') {
             const isAdminPasswordValid = await bcrypt.compare(password, currentUser.password);
             if (isAdminPasswordValid) {
                 return res.json({ success: true, message: 'Admin password verified successfully.' });
@@ -542,8 +542,8 @@ exports.verifyCreatorPassword = async (req, res) => {
         // 2. If the current user's password fails, and they are an admin, we can stop here
         // because we already checked their password. If they aren't an admin, we proceed
         // to check their creator's password as a fallback.
-        if (currentUserInfo.role_level === 'admin' || currentUserInfo.role_level === 'superadmin') {
-             return res.status(401).json({ success: false, message: 'Invalid Password' });
+        if (currentUserInfo.role_level === 'ADMIN' || currentUserInfo.role_level === 'SUPER_ADMIN') {
+            return res.status(401).json({ success: false, message: 'Invalid Password' });
         }
 
         // 3. As a fallback for non-admin users, check the creator's password.
@@ -554,7 +554,7 @@ exports.verifyCreatorPassword = async (req, res) => {
         }
 
         // Get the creator's (Hotel Admin's) details, specifically the password hash
-        const creator = db.prepare("SELECT password, role_level FROM mst_users WHERE userid = ? AND role_level IN ('admin', 'brand_admin', 'superadmin')").get(currentUserInfo.created_by_id);
+        const creator = db.prepare("SELECT password, role_level FROM mst_users WHERE userid = ? AND role_level IN ('ADMIN', 'BRAND_ADMIN', 'SUPER_ADMIN')").get(currentUserInfo.created_by_id);
 
         if (!creator) {
             return res.status(404).json({ success: false, message: 'Creator user record not found or is not an authorized admin.' });
@@ -643,7 +643,7 @@ exports.refreshToken = (req, res) => {
 exports.createInitialSuperAdmin = async () => {
     try {
         // Check if SuperAdmin exists
-        const existingSuperAdmin = db.prepare('SELECT userid FROM mst_users WHERE role_level = ?').get('superadmin');
+        const existingSuperAdmin = db.prepare('SELECT userid FROM mst_users WHERE role_level = ?').get('SUPER_ADMIN');
 
         if (!existingSuperAdmin) {
             const hashedPassword = await bcrypt.hash('superadmin123', 10);
@@ -660,7 +660,7 @@ exports.createInitialSuperAdmin = async () => {
                 'superadmin@miracle.com',
                 hashedPassword,
                 'Super Administrator',
-                'superadmin',
+                'SUPER_ADMIN',
                 1
             );
 

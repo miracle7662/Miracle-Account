@@ -11,20 +11,14 @@
 <--!----------------------------------------------------------------!-->
 */
 
-// Google Font
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-
-// Core files
-@import './node_modules/bootstrap/scss/functions';
-
-@import 'theme/theme-variables';
-@import 'theme/theme-variables-custom';
-@import 'theme/theme-variables-dark';
-@import 'theme/theme-root';
-@import 'theme/theme-utilities';
-
-@import './node_modules/bootstrap/scss/bootstrap';
+// Core files - @use rules must come first
+@use './node_modules/bootstrap/scss/functions' as *;
+@use './node_modules/bootstrap/scss/mixins' as *;
+@use 'theme/theme-variables' as *;
+@use 'theme/theme-variables-custom' as *;
+@use 'theme/theme-variables-dark' as *;
+@use 'theme/theme-root' as *;
+@use 'theme/theme-utilities' as *;
 
 // Structure
 @use 'structure/apps' as *;
@@ -36,34 +30,14 @@
 @use 'structure/megumenu' as *;
 @use 'structure/livechat' as *;
 
-// Options
-@import 'options/options';
-
 // Dashboard
 @use 'ovewrite/dashbaords/dashbaord' as *;
-
-// Apps
-@import 'ovewrite/apps/calendar';
 
 // Pages
 @use 'ovewrite/pages/profile' as *;
 @use 'ovewrite/pages/auth' as *;
 
 // Components
-@import 'ovewrite/components/base/root';
-@import 'ovewrite/components/base/reboot';
-@import 'ovewrite/components/base/common';
-@import 'ovewrite/components/base/accordions';
-@import 'ovewrite/components/base/avatar';
-@import 'ovewrite/components/base/buttons';
-@import 'ovewrite/components/base/card';
-@import 'ovewrite/components/base/carousel';
-@import 'ovewrite/components/base/dropdown';
-@import 'ovewrite/components/base/modal';
-@import 'ovewrite/components/base/navtab';
-@import 'ovewrite/components/base/offcanvas';
-@import 'ovewrite/components/base/preloader';
-@import 'ovewrite/components/base/miscellaneous';
 @use 'ovewrite/components/icons/icons' as *;
 @use 'ovewrite/components/tables/tables' as *;
 @use 'ovewrite/components/charts/apexcharts' as *;
@@ -82,3 +56,31 @@
 @use 'ovewrite/components/extended/sweetalert2' as *;
 @use 'ovewrite/components/extended/slick-slider' as *;
 @use 'ovewrite/components/extended/dropzone' as *;
+
+// Google Font
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import './node_modules/bootstrap/scss/bootstrap';
+
+// Options
+@import 'options/options';
+
+// Apps
+@import 'ovewrite/apps/calendar';
+
+// Components
+@import 'ovewrite/components/base/root';
+@import 'ovewrite/components/base/reboot';
+@import 'ovewrite/components/base/common';
+@import 'ovewrite/components/base/accordions';
+@import 'ovewrite/components/base/avatar';
+@import 'ovewrite/components/base/buttons';
+@import 'ovewrite/components/base/card';
+@import 'ovewrite/components/base/carousel';
+@import 'ovewrite/components/base/dropdown';
+@import 'ovewrite/components/base/modal';
+@import 'ovewrite/components/base/navtab';
+@import 'ovewrite/components/base/offcanvas';
+@import 'ovewrite/components/base/preloader';
+@import 'ovewrite/components/base/miscellaneous';

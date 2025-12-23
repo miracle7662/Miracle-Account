@@ -152,6 +152,19 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running', cors: 'enabled' });
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Internal Server Error:', err);
+  console.error('Stack trace:', err.stack);
+  console.error('Request URL:', req.url);
+  console.error('Request method:', req.method);
+  res.status(500).json({
+    error: 'Internal Server Error',
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 app.listen(port, async () => {
       console.log(`Server running at http://localhost:${port}`);
     // Initialize WhatsApp client

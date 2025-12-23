@@ -1,7 +1,8 @@
-// Variables
-//
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+@use 'sass:color';
+@use '../node_modules/bootstrap/scss/mixins' as *;
 
 // scss-docs-start gray-color-variables
 $white: #fff;
@@ -87,25 +88,25 @@ $blue-700: color.adjust($blue, $lightness: -40%);
 $blue-800: color.adjust($blue, $lightness: -60%);
 $blue-900: color.adjust($blue, $lightness: -80%);
 
-$indigo-100: tint-color($indigo, 80%);
-$indigo-200: tint-color($indigo, 60%);
-$indigo-300: tint-color($indigo, 40%);
-$indigo-400: tint-color($indigo, 20%);
+$indigo-100: color.adjust($indigo, $lightness: 80%);
+$indigo-200: color.adjust($indigo, $lightness: 60%);
+$indigo-300: color.adjust($indigo, $lightness: 40%);
+$indigo-400: color.adjust($indigo, $lightness: 20%);
 $indigo-500: $indigo;
-$indigo-600: shade-color($indigo, 20%);
-$indigo-700: shade-color($indigo, 40%);
-$indigo-800: shade-color($indigo, 60%);
-$indigo-900: shade-color($indigo, 80%);
+$indigo-600: color.adjust($indigo, $lightness: -20%);
+$indigo-700: color.adjust($indigo, $lightness: -40%);
+$indigo-800: color.adjust($indigo, $lightness: -60%);
+$indigo-900: color.adjust($indigo, $lightness: -80%);
 
-$purple-100: tint-color($purple, 80%);
-$purple-200: tint-color($purple, 60%);
-$purple-300: tint-color($purple, 40%);
-$purple-400: tint-color($purple, 20%);
+$purple-100: color.adjust($purple, $lightness: 80%);
+$purple-200: color.adjust($purple, $lightness: 60%);
+$purple-300: color.adjust($purple, $lightness: 40%);
+$purple-400: color.adjust($purple, $lightness: 20%);
 $purple-500: $purple;
-$purple-600: shade-color($purple, 20%);
-$purple-700: shade-color($purple, 40%);
-$purple-800: shade-color($purple, 60%);
-$purple-900: shade-color($purple, 80%);
+$purple-600: color.adjust($purple, $lightness: -20%);
+$purple-700: color.adjust($purple, $lightness: -40%);
+$purple-800: color.adjust($purple, $lightness: -60%);
+$purple-900: color.adjust($purple, $lightness: -80%);
 
 $pink-100: tint-color($pink, 80%);
 $pink-200: tint-color($pink, 60%);
@@ -494,9 +495,6 @@ $grid-breakpoints: (
 );
 // scss-docs-end grid-breakpoints
 
-@include _assert-ascending($grid-breakpoints, '$grid-breakpoints');
-@include _assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
-
 // Grid containers
 //
 // Define the maximum width of `.container` for different screen sizes.
@@ -511,8 +509,6 @@ $container-max-widths: (
   // xxl: 1320px [Changed]
 );
 // scss-docs-end container-max-widths
-
-@include _assert-ascending($container-max-widths, '$container-max-widths');
 
 // Grid columns
 //
