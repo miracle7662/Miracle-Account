@@ -32,7 +32,6 @@ export default function useLogin() {
       setTimeout(() => {
         if (res.token) {
           saveSession(res)
-          navigate(redirectUrl)
         }
       }, 1500)
     } catch (error) {
@@ -57,7 +56,7 @@ export default function useLogin() {
       setTimeout(() => {
         if (res.token) {
           saveSession(res)
-          navigate(redirectUrl)
+          navigate('/auth/company-selection')
         }
       }, 1500)
     } catch (error) {

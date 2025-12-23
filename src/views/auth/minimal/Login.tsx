@@ -4,71 +4,25 @@ import { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuthContext } from '@/common'
 import TitleHelmet from '@/components/Common/TitleHelmet'
-import useLogin from '../useAuth/useLogin'
+import useLogin from '../useAuth/useLogin.tsx'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import masterDataService, { Company, Year } from '@/common/api/masterData'
 
 
 const Login = () => {
-  const { removeSession } = useAuthContext()
-  const { loading, loginWithEmail, loginWithUsername, redirectUrl, isAuthenticated } = useLogin()
-  const [loginType, setLoginType] = useState<'superadmin' | 'hoteladmin'>('hoteladmin')
-  const [email, setEmail] = useState('superadmin@miracle.com')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('superadmin123')
+  const { removeSession, user } = useAuthContext()
+  const { loading, loginWithUsername, redirectUrl, isAuthenticated } = useLogin()
+  const [username, setUsername] = useState('testuser')
+  const [password, setPassword] = useState('testpass')
   const [rememberMe, setRememberMe] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [emailError, setEmailError] = useState<string | null>(null)
   const [usernameError, setUsernameError] = useState<string | null>(null)
   const [passwordError, setPasswordError] = useState<string | null>(null)
-
-  // Company and Year selection states
-  const [companies, setCompanies] = useState<Company[]>([])
-  const [years, setYears] = useState<Year[]>([])
-  const [selectedCompany, setSelectedCompany] = useState<string>('')
-  const [selectedYear, setSelectedYear] = useState<string>('')
-  const [companyError, setCompanyError] = useState<string | null>(null)
-  const [yearError, setYearError] = useState<string | null>(null)
 
 
 
   useEffect(() => {
     removeSession()
   }, [removeSession])
-
-  useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        const response = await masterDataService.getCompanies()
-        setCompanies(response.data)
-      } catch (error) {
-        console.error('Error fetching companies:', error)
-      }
-    }
-
-    const fetchYears = async () => {
-      try {
-        const response = await masterDataService.getYears()
-        setYears(response.data)
-      } catch (error) {
-        console.error('Error fetching years:', error)
-      }
-    }
-
-    if (loginType === 'hoteladmin') {
-      fetchCompanies()
-      fetchYears()
-    }
-  }, [loginType])
-
-  const validateEmail = (input: string) => {
-    if (!input) {
-      setEmailError('Email is required')
-      return false
-    }
-    setEmailError(null)
-    return true
-  }
 
   const validateUsername = (input: string) => {
     if (!input) {
@@ -88,48 +42,19 @@ const Login = () => {
     return true
   }
 
-  const validateCompany = (input: string) => {
-    if (!input) {
-      setCompanyError('Company selection is required')
-      return false
-    }
-    setCompanyError(null)
-    return true
-  }
-
-  const validateYear = (input: string) => {
-    if (!input) {
-      setYearError('Year selection is required')
-      return false
-    }
-    setYearError(null)
-    return true
-  }
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (loginType === 'superadmin') {
-      const isEmailValid = validateEmail(email)
-      const isPasswordValid = validatePassword(password)
-      if (isEmailValid && isPasswordValid) {
-        loginWithEmail(e, { email, password })
-      }
-    } else {
-      const isUsernameValid = validateUsername(username)
-      const isPasswordValid = validatePassword(password)
-      const isCompanyValid = validateCompany(selectedCompany)
-      const isYearValid = validateYear(selectedYear)
-      if (isUsernameValid && isPasswordValid && isCompanyValid && isYearValid) {
-        // The companyName is derived but not part of the login function's expected parameters.
-        // It will likely be set in the session by the useLogin hook.
-        loginWithUsername(e, { username, password, company: selectedCompany, year: selectedYear })
-      }
+    const isUsernameValid = validateUsername(username)
+    const isPasswordValid = validatePassword(password)
+
+    if (isUsernameValid && isPasswordValid) {
+      loginWithUsername(e, { username, password })
     }
   }
 
   if (isAuthenticated) {
-    return <Navigate to={redirectUrl} replace />
+    return (!user?.companyName || !user?.year ? <Navigate to="/auth/company-selection" replace /> : <Navigate to={redirectUrl} replace />)
   }
 
   return (
@@ -523,135 +448,27 @@ const Login = () => {
               }}>Enter your details to access your account</p>
             </div>
 
-            {/* Login Type Toggle */}
-            <div style={{ marginBottom: '1.2rem' }}>
-              <div className="btn-group w-100" role="group">
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="loginType"
-                  id="superadmin"
-                  checked={loginType === 'superadmin'}
-                  onChange={() => setLoginType('superadmin')}
-                />
-                {/* <label className="btn btn-outline-primary" htmlFor="superadmin">
-                  SuperAdmin Login
-                </label> */}
-
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="loginType"
-                  id="hoteladmin"
-                  checked={loginType === 'hoteladmin'}
-                  onChange={() => setLoginType('hoteladmin')}
-                />
-                <label className="btn btn-outline-primary" htmlFor="hoteladmin">
-                 Admin Login
-                </label>
-              </div>
-            </div>
-
-            {loginType === 'hoteladmin' && (
-              <>
-                <div style={{ marginBottom: '1rem' }}>
-                  <select
-                    className={`form-select ${companyError ? 'is-invalid' : ''}`}
-                    value={selectedCompany}
-                    onChange={(e) => {
-                      setSelectedCompany(e.target.value)
-                      validateCompany(e.target.value)
-                    }}
-                    style={{
-                      padding: '0.7rem 1rem',
-                      borderRadius: '8px',
-                      border: '1px solid #e0e0e0',
-                      backgroundColor: '#ffffff',
-                      fontSize: '0.9rem'
-                    }}
-                  >
-                    <option value="">Select Company</option>
-                    {companies.map((company) => (
-                      <option key={company.companyid} value={company.companyid}>
-                        {company.company_name}
-                      </option>
-                    ))}
-                  </select>
-                  {companyError && <div className="invalid-feedback d-block">{companyError}</div>}
-                </div>
-
-                <div style={{ marginBottom: '1rem' }}>
-                  <select
-                    className={`form-select ${yearError ? 'is-invalid' : ''}`}
-                    value={selectedYear}
-                    onChange={(e) => {
-                      setSelectedYear(e.target.value)
-                      validateYear(e.target.value)
-                    }}
-                    style={{
-                      padding: '0.7rem 1rem',
-                      borderRadius: '8px',
-                      border: '1px solid #e0e0e0',
-                      backgroundColor: '#ffffff',
-                      fontSize: '0.9rem'
-                    }}
-                  >
-                    <option value="">Select Year</option>
-                    {years.map((year) => (
-                      <option key={year.yearid} value={year.yearid}>
-                        {year.Year}
-                      </option>
-                    ))}
-                  </select>
-                  {yearError && <div className="invalid-feedback d-block">{yearError}</div>}
-                </div>
-              </>
-            )}
-
             <form onSubmit={handleSubmit}>
-              {loginType === 'superadmin' ? (
-                <div style={{ marginBottom: '1rem' }}>
-                  <input
-                    type="email"
-                    className={`form-control ${emailError ? 'is-invalid' : ''}`}
-                    placeholder="superadmin@miracle.com"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      validateEmail(e.target.value)
-                    }}
-                    style={{
-                      padding: '0.7rem 1rem',
-                      borderRadius: '8px',
-                      border: '1px solid #e0e0e0',
-                      backgroundColor: '#ffffff',
-                      fontSize: '0.9rem'
-                    }}
-                  />
-                  {emailError && <div className="invalid-feedback d-block">{emailError}</div>}
-                </div>
-              ) : (
-                <div style={{ marginBottom: '1rem' }}>
-                  <input
-                    type="text"
-                    className={`form-control ${usernameError ? 'is-invalid' : ''}`}
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => {
-                      setUsername(e.target.value)
-                      validateUsername(e.target.value)
-                    }}
-                    style={{
-                      padding: '0.7rem 1rem',
-                      borderRadius: '8px',
-                      border: '1px solid #e0e0e0',
-                      backgroundColor: '#ffffff',
-                      fontSize: '0.9rem'
-                    }}
-                  />
-                  {usernameError && <div className="invalid-feedback d-block">{usernameError}</div>}
-                </div>
-              )}
+              <div style={{ marginBottom: '1rem' }}>
+                <input
+                  type="text"
+                  className={`form-control ${usernameError ? 'is-invalid' : ''}`}
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value)
+                    validateUsername(e.target.value)
+                  }}
+                  style={{
+                    padding: '0.7rem 1rem',
+                    borderRadius: '8px',
+                    border: '1px solid #e0e0e0',
+                    backgroundColor: '#ffffff',
+                    fontSize: '0.9rem'
+                  }}
+                />
+                {usernameError && <div className="invalid-feedback d-block">{usernameError}</div>}
+              </div>
 
               <div style={{ marginBottom: '1rem', position: 'relative' }}>
                 <input

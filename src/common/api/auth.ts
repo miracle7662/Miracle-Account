@@ -53,3 +53,27 @@ export const getCurrentUser = async (token: string) => {
 export const logoutUser = () => {
   localStorage.removeItem('WINDOW_AUTH_SESSION')
 }
+
+// Refresh JWT token
+export const refreshToken = async (token: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return response.data
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to refresh token')
+  }
+}
+
+// Get companies
+export const getCompanies = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/companies`)
+    return response.data
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to get companies')
+  }
+}

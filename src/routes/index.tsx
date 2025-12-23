@@ -152,6 +152,9 @@ const ContactUs = React.lazy(() => import('../views/pages/other-pages/ContactUs'
 const PrivacyPolicy = React.lazy(() => import('../views/pages/other-pages/PrivacyPolicy'))
 const TermsServices = React.lazy(() => import('../views/pages/other-pages/TermsServices'))
 
+// Company Selection
+const CompanySelection = React.lazy(() => import('../views/auth/CompanySelection.tsx'))
+
 // Auth {{Minimal}}
 const Login = React.lazy(() => import('../views/auth/minimal/Login'))
 const Register = React.lazy(() => import('../views/auth/minimal/Register'))
@@ -1005,6 +1008,12 @@ const authRoutes: RoutesProps[] = [
             route: Route,
           },
         ],
+      },
+      {
+        path: '/auth/company-selection',
+        name: 'Company Selection',
+        element: <CompanySelection />,
+        route: Route,
       },
       {
         path: '/auth/register',

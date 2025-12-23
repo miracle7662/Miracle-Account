@@ -86,7 +86,7 @@ yearid INTEGER
 
 
 
--- New tables for hierarchical user management
+-- Redesigned user management tables
 CREATE TABLE IF NOT EXISTS mst_users (
     userid INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
@@ -94,27 +94,45 @@ CREATE TABLE IF NOT EXISTS mst_users (
     password TEXT NOT NULL,
     full_name TEXT NOT NULL,
     phone TEXT,
-    role_level TEXT NOT NULL, -- 'superadmin',  'admin', 'user'
+    email_verified INTEGER DEFAULT 0, -- Email verification status
+    phone_verified INTEGER DEFAULT 0, -- Phone verification status
+    role_level TEXT NOT NULL, -- 'superadmin', 'admin', 'user'
     parent_user_id INTEGER, -- References the user who created this user
-    Designation TEXT, -- Designation for outlet user
-    designationid INTEGER, -- Designation ID for outlet user
-    user_type TEXT, -- User type for outlet user     
-    mac_address TEXT, -- MAC address for outlet user
-    assign_warehouse TEXT, -- Assigned warehouse for outlet user
-    language_preference TEXT DEFAULT 'English', -- Language preference for outlet user
-    address TEXT, -- 
-    city TEXT, --
-    web_access INTEGER DEFAULT 0, -- Web access permission    
-   
-      usertypeid          INTEGER,
-    status INTEGER,
+    status INTEGER DEFAULT 1,
     last_login DATETIME,
     created_by_id INTEGER,
     created_date DATETIME,
     updated_by_id INTEGER,
-    updated_date DATETIME,
-    companyid INTEGER,
-yearid INTEGER
+    updated_date DATETIME
+);
+
+-- Junction table for user-company relationships with roles
+CREATE TABLE IF NOT EXISTS user_companies (
+    user_company_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid INTEGER NOT NULL,
+    companyid INTEGER NOT NULL,
+    role_in_company TEXT NOT NULL, -- Role specific to this company: 'owner', 'admin', 'manager', 'accountant', 'viewer'
+    assigned_by INTEGER, -- User who assigned this role
+    assigned_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_active INTEGER DEFAULT 1,
+    FOREIGN KEY (userid) REFERENCES mst_users(userid) ON DELETE CASCADE,
+    FOREIGN KEY (companyid) REFERENCES companymaster(companyid) ON DELETE CASCADE,
+    FOREIGN KEY (assigned_by) REFERENCES mst_users(userid),
+    UNIQUE(userid, companyid) -- One role per user per company
+);
+
+-- OTP verification table
+CREATE TABLE IF NOT EXISTS otp_verifications (
+    otp_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT,
+    phone TEXT,
+    otp_code TEXT NOT NULL,
+    otp_type TEXT NOT NULL, -- 'email_verification', 'phone_verification', 'login_otp'
+    expires_at DATETIME NOT NULL,
+    is_used INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    attempts INTEGER DEFAULT 0,
+    max_attempts INTEGER DEFAULT 3
 );
 
 

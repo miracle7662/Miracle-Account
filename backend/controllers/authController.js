@@ -28,10 +28,10 @@ exports.authenticateToken = (req, res, next) => {
     });
 };
 
-// Login user
+// Login user (Tally-like: login first, then select company)
 exports.login = async (req, res) => {
     try {
-        const { username, password, company, year } = req.body;
+        const { username, password } = req.body;
 
         if (!password) {
             return res.status(400).json({ message: 'Password is required' });
@@ -41,121 +41,216 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Username is required' });
         }
 
-        if (!company) {
-            return res.status(400).json({ message: 'Company is required' });
-        }
-
-        if (!year) {
-            return res.status(400).json({ message: 'Year is required' });
-        }
-
-        // Find user by companyid, username, yearid from mst_users table
+        // Find user by username only
         const user = db.prepare(`
             SELECT u.*
             FROM mst_users u
-            WHERE u.companyid = ? AND u.username = ? AND u.yearid = ? AND u.status = 1
-        `).get(company, username, year);
+            WHERE u.username = ? AND u.status = 1
+        `).get(username);
 
         if (!user) {
-            return res.status(401).json({ message: 'Invalid login (User not found for this company)' });
+            return res.status(401).json({ message: 'Invalid login credentials' });
         }
 
         // Check password
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
-            return res.status(401).json({ message: 'Invalid login' });
+            return res.status(401).json({ message: 'Invalid login credentials' });
         }
 
         // Update last login
         db.prepare('UPDATE mst_users SET last_login = datetime(\'now\') WHERE userid = ?').run(user.userid);
 
-        // Fetch company details
-        let companyName = null;
-        const companyData = db.prepare(`
-            SELECT  company_name
-            FROM companymaster
-            WHERE companyid = ?
-        `).get(company);
-        if (companyData) {
-            companyName = companyData.company_name;
+        // Get user's accessible companies
+        let userCompanies = [];
+        if (user.role_level === 'superadmin') {
+            // SuperAdmin can access all companies
+            userCompanies = db.prepare(`
+                SELECT
+                    c.companyid,
+                    c.company_name,
+                    'owner' as role_in_company,
+                    y.yearid,
+                    y.Year as year_name,
+                    y.Startdate,
+                    y.Enddate
+                FROM companymaster c
+                CROSS JOIN yearmaster y
+                WHERE c.status = 1 AND y.status = 1
+                ORDER BY c.company_name, y.Year
+            `).all();
         } else {
-            companyName = company; // Use the company name from request if not found in database
+            // Regular users: get companies they have access to
+            userCompanies = db.prepare(`
+                SELECT
+                    uc.companyid,
+                    c.company_name,
+                    uc.role_in_company,
+                    y.yearid,
+                    y.Year as year_name,
+                    y.Startdate,
+                    y.Enddate
+                FROM user_companies uc
+                JOIN companymaster c ON uc.companyid = c.companyid
+                CROSS JOIN yearmaster y
+                WHERE uc.userid = ? AND uc.is_active = 1 AND c.status = 1 AND y.status = 1
+                ORDER BY c.company_name, y.Year
+            `).all(user.userid);
         }
 
-        // Fetch year details using yearid
-        let yearValue = null;
-        const yearData = db.prepare(`
-            SELECT Year,yearid
-            FROM yearmaster
-            WHERE yearid = ?
-        `).get(year);
-        if (yearData) {
-            yearValue = yearData.Year;
-        } else {
-            yearValue = year; // Use the year value from request if not found in database
-        }
-
-        // Create JWT token
+        // Create JWT token (without company context - will be added later)
         const token = jwt.sign(
             {
                 userid: user.userid,
                 username: user.username,
-                email: user.email,
                 role_level: user.role_level,
-                brand_id: user.brand_id,
-                hotelid: user.hotelid,
-                outletid: user.outletid, // Ensure this is included
-                created_by_id: user.created_by_id || null, // Ensure it’s included, even if null
-                companyName: companyName,
-                year: yearValue,
-                companyid: company,
-                yearid: year
+                email: user.email
             },
             JWT_SECRET,
             { expiresIn: '24h' }
         );
 
-        // Return user data (without password)
-        const userResponse = {
-            id: user.userid,
-            username: user.username,
-            email: user.email,
-            name: user.full_name,
-            role: user.role_level,
-            role_level: user.role_level,
-            created_by_id: user.created_by_id || null, // Ensure it’s included, even if null
-            companyName: companyName,
-            year: yearValue,
-            companyid: company,
-            yearid: year,
-            token: token
-        };
-
-        // Log login details based on user role
-        if (user.role_level === 'admin') {
-            console.log('🏨 Hotel Admin Login Details:');
-            console.log('   Login User ID:', user.userid);
-            console.log('   Username:', user.username);
-         
-            console.log('   Full Name:', user.full_name);
-            console.log('   Email:', user.email);
-            console.log('   Phone:', user.phone);
-            console.log('   Login Time:', new Date().toISOString());
-            console.log('   ---');
-        } else if (user.role_level === 'superadmin') {
-            console.log('👑 SuperAdmin Login Details:');
-            console.log('   Login User ID:', user.userid);
-            console.log('   Username:', user.username);
-            console.log('   Email:', user.email);
-            console.log('   Full Name:', user.full_name);
-            console.log('   Login Time:', new Date().toISOString());
-            console.log('   ---');
-        }
-
-        res.json(userResponse);
+        res.json({
+            message: 'Login successful',
+            token: token,
+            user: {
+                userid: user.userid,
+                username: user.username,
+                full_name: user.full_name,
+                email: user.email,
+                role_level: user.role_level,
+                email_verified: user.email_verified,
+                phone_verified: user.phone_verified
+            },
+            companies: userCompanies
+        });
 
     } catch (error) {
         console.error('Login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// Select company and year after login (Tally-like company selection)
+exports.selectCompany = (req, res) => {
+    try {
+        const { companyid, yearid } = req.body;
+        const user = req.user; // From JWT middleware
+
+        if (!companyid || !yearid) {
+            return res.status(400).json({ message: 'Company and year selection required' });
+        }
+
+        // Verify user has access to this company
+        let hasAccess = false;
+        if (user.role_level === 'superadmin') {
+            hasAccess = true;
+        } else {
+            const accessCheck = db.prepare(`
+                SELECT 1 FROM user_companies
+                WHERE userid = ? AND companyid = ? AND is_active = 1
+            `).get(user.userid, companyid);
+            hasAccess = !!accessCheck;
+        }
+
+        if (!hasAccess) {
+            return res.status(403).json({ message: 'Access denied to this company' });
+        }
+
+        // Get company and year details
+        const companyData = db.prepare(`
+            SELECT c.*, y.Year as year_name, y.Startdate, y.Enddate
+            FROM companymaster c
+            JOIN yearmaster y ON y.yearid = ?
+            WHERE c.companyid = ?
+        `).get(yearid, companyid);
+
+        if (!companyData) {
+            return res.status(404).json({ message: 'Company or year not found' });
+        }
+
+        // Create company-specific JWT token
+        const companyToken = jwt.sign(
+            {
+                userid: user.userid,
+                username: user.username,
+                role_level: user.role_level,
+                email: user.email,
+                companyid: companyid,
+                yearid: yearid,
+                company_name: companyData.company_name,
+                year_name: companyData.year_name
+            },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.json({
+            message: 'Company selected successfully',
+            token: companyToken,
+            company: {
+                companyid: companyData.companyid,
+                company_name: companyData.company_name,
+                yearid: yearid,
+                year_name: companyData.year_name,
+                start_date: companyData.Startdate,
+                end_date: companyData.Enddate
+            }
+        });
+
+    } catch (error) {
+        console.error('Company selection error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// Get user's accessible companies (for company selection screen)
+exports.getUserCompanies = (req, res) => {
+    try {
+        const user = req.user; // From JWT middleware
+
+        let userCompanies = [];
+        if (user.role_level === 'superadmin') {
+            // SuperAdmin can access all companies
+            userCompanies = db.prepare(`
+                SELECT
+                    c.companyid,
+                    c.company_name,
+                    'owner' as role_in_company,
+                    y.yearid,
+                    y.Year as year_name,
+                    y.Startdate,
+                    y.Enddate
+                FROM companymaster c
+                CROSS JOIN yearmaster y
+                WHERE c.status = 1 AND y.status = 1
+                ORDER BY c.company_name, y.Year
+            `).all();
+        } else {
+            // Regular users: get companies they have access to
+            userCompanies = db.prepare(`
+                SELECT
+                    uc.companyid,
+                    c.company_name,
+                    uc.role_in_company,
+                    y.yearid,
+                    y.Year as year_name,
+                    y.Startdate,
+                    y.Enddate
+                FROM user_companies uc
+                JOIN companymaster c ON uc.companyid = c.companyid
+                CROSS JOIN yearmaster y
+                WHERE uc.userid = ? AND uc.is_active = 1 AND c.status = 1 AND y.status = 1
+                ORDER BY c.company_name, y.Year
+            `).all(user.userid);
+        }
+
+        res.json({
+            companies: userCompanies
+        });
+
+    } catch (error) {
+        console.error('Get user companies error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
@@ -484,22 +579,82 @@ exports.verifyCreatorPassword = async (req, res) => {
     }
 };
 
+// Refresh JWT token
+exports.refreshToken = (req, res) => {
+    try {
+        const authHeader = req.headers['authorization'];
+
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Authorization header missing or malformed" });
+        }
+
+        const token = authHeader.split(" ")[1];
+
+        if (!token) {
+            return res.status(401).json({ message: "Access token required" });
+        }
+
+        // Verify the current token
+        jwt.verify(token, JWT_SECRET, (err, decoded) => {
+            if (err) {
+                return res.status(403).json({ message: "Invalid or expired token" });
+            }
+
+            // Get user details to ensure they still exist and are active
+            const user = db.prepare(`
+                SELECT u.*
+                FROM mst_users u
+                WHERE u.userid = ? AND u.status = 1
+            `).get(decoded.userid);
+
+            if (!user) {
+                return res.status(401).json({ message: 'User not found or inactive' });
+            }
+
+            // Generate new token with same payload
+            const newToken = jwt.sign(
+                {
+                    userid: decoded.userid,
+                    username: decoded.username,
+                    role_level: decoded.role_level,
+                    email: decoded.email,
+                    companyid: decoded.companyid,
+                    yearid: decoded.yearid,
+                    company_name: decoded.company_name,
+                    year_name: decoded.year_name
+                },
+                JWT_SECRET,
+                { expiresIn: '24h' }
+            );
+
+            res.json({
+                message: 'Token refreshed successfully',
+                token: newToken
+            });
+        });
+
+    } catch (error) {
+        console.error('Token refresh error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 // Create initial SuperAdmin (if not exists)
 exports.createInitialSuperAdmin = async () => {
     try {
         // Check if SuperAdmin exists
         const existingSuperAdmin = db.prepare('SELECT userid FROM mst_users WHERE role_level = ?').get('superadmin');
-        
+
         if (!existingSuperAdmin) {
             const hashedPassword = await bcrypt.hash('superadmin123', 10);
-            
+
             const stmt = db.prepare(`
                 INSERT INTO mst_users (
-                    username, email, password, full_name, role_level, 
+                    username, email, password, full_name, role_level,
                     status, created_date
                 ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))
             `);
-            
+
             const result = stmt.run(
                 'superadmin',
                 'superadmin@miracle.com',

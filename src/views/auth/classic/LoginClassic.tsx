@@ -10,13 +10,13 @@ import { useTranslation } from 'react-i18next'
 
 const LoginClassic = () => {
   const { t } = useTranslation()
-  const { removeSession } = useAuthContext()
-  const { loading, loginWithEmail, redirectUrl, isAuthenticated } = useLogin()
-  const [email, setEmail] = useState<string>('admin@email.com')
+  const { removeSession, user } = useAuthContext()
+  const { loading, loginWithUsername, redirectUrl, isAuthenticated } = useLogin()
+  const [username, setUsername] = useState<string>('admin')
   const [password, setPassword] = useState<string>('12345678')
-  const [rememberMe, setRememberMe] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [emailError, setEmailError] = useState<string | null>(null)
+  const [rememberMe, setRememberMe] = useState<boolean>(false)
+  const [usernameError, setUsernameError] = useState<string | null>(null)
   const [passwordError, setPasswordError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -27,12 +27,12 @@ const LoginClassic = () => {
     setShowPassword(!showPassword)
   }
 
-  const validateEmail = (input: string) => {
+  const validateUsername = (input: string) => {
     if (!input) {
-      setEmailError(t('login.email_required'))
+      setUsernameError(t('login.username_required'))
       return false
     } else {
-      setEmailError(null)
+      setUsernameError(null)
       return true
     }
   }
@@ -50,11 +50,11 @@ const LoginClassic = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const isEmailValid = validateEmail(email)
+    const isUsernameValid = validateUsername(username)
     const isPasswordValid = validatePassword(password)
 
-    if (isEmailValid && isPasswordValid) {
-      loginWithEmail(e, { email, password })
+    if (isUsernameValid && isPasswordValid) {
+      loginWithUsername(e, { username, password })
     }
   }
 
@@ -63,7 +63,7 @@ const LoginClassic = () => {
       <TitleHelmet title="Login Classic" />
       <AuthLayout>
         <AuthClassic>
-          {isAuthenticated && <Navigate to={redirectUrl} replace />}
+          {isAuthenticated ? (!user?.companyName || !user?.year ? <Navigate to="/auth/company-selection" replace /> : <Navigate to={redirectUrl} replace />) : null}
           <div className="mb-12">
             <h4 className="fw-bold mb-3">{t('login.login_title')}</h4>
             <p className="fs-16 lead">{t('login.login_subtitle')}</p>
@@ -71,17 +71,17 @@ const LoginClassic = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Control
-                type="email"
-                placeholder="Email"
-                value={email}
+                type="text"
+                placeholder="Username"
+                value={username}
                 onChange={(e) => {
-                  setEmail(e.target.value)
-                  validateEmail(e.target.value)
+                  setUsername(e.target.value)
+                  validateUsername(e.target.value)
                 }}
-                isInvalid={!!emailError}
+                isInvalid={!!usernameError}
                 required
               />
-              <Form.Control.Feedback type="invalid">{emailError}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{usernameError}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3 position-relative">
               <Form.Control
