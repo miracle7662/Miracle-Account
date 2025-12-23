@@ -28,6 +28,74 @@ exports.authenticateToken = (req, res, next) => {
     });
 };
 
+// Initial login with username/password only (first step)
+exports.initialLogin = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username) {
+            return res.status(400).json({ message: 'Username is required' });
+        }
+
+        if (!password) {
+            return res.status(400).json({ message: 'Password is required' });
+        }
+
+        // Find user by username from mst_users table (without company/year filter)
+        const user = db.prepare(`
+            SELECT u.*
+            FROM mst_users u
+            WHERE u.username = ? AND u.status = 1
+        `).get(username);
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+
+        // Check password
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+
+        // Get available companies for this user
+        const companies = db.prepare(`
+            SELECT DISTINCT c.companyid, c.company_name
+            FROM companymaster c
+            INNER JOIN mst_users u ON u.companyid = c.companyid
+            WHERE u.username = ? AND u.status = 1
+            ORDER BY c.company_name
+        `).all(username);
+
+        // Get available years for this user
+        const years = db.prepare(`
+            SELECT DISTINCT y.yearid, y.Year as year_value
+            FROM yearmaster y
+            INNER JOIN mst_users u ON u.yearid = y.yearid
+            WHERE u.username = ? AND u.status = 1
+            ORDER BY y.Year DESC
+        `).all(username);
+
+        // Return available options for company and year selection
+        res.json({
+            success: true,
+            message: 'Initial login successful',
+            user: {
+                id: user.userid,
+                username: user.username,
+                name: user.full_name,
+                email: user.email
+            },
+            companies: companies,
+            years: years
+        });
+
+    } catch (error) {
+        console.error('Initial login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 // Login user
 exports.login = async (req, res) => {
     try {

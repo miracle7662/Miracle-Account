@@ -166,7 +166,7 @@ const Logout = React.lazy(() => import('../views/auth/Logout'))
 const LoginClassic = React.lazy(() => import('../views/auth/classic/LoginClassic'))
 const RegisterClassic = React.lazy(() => import('../views/auth/classic/RegisterClassic'))
 const RegisterSuccessClassic = React.lazy(
-  () => import('../views/auth/classic/RegisterSuccessClassic'),
+  () => import('../views/auth/classic/RegisterSuccessClassic')
 )
 const ResetPasswordClassic = React.lazy(() => import('../views/auth/classic/ResetPasswordClassic'))
 const ForgotPasswordClassic = React.lazy(() => import('../views/auth/classic/ForgotPasswordClassic'),)
@@ -213,6 +213,8 @@ const ResetPasswordModern = React.lazy(() => import('../views/auth/modern/ResetP
 const ForgotPasswordModern = React.lazy(() => import('../views/auth/modern/ForgotPasswordModern'))
 const TwoFactorOTPModern = React.lazy(() => import('../views/auth/modern/TwoFactorOTPModern'))
 const LockScreenModern = React.lazy(() => import('../views/auth/modern/LockScreenModern'))
+
+// Company Year Selector - Component not found, removing import
 
 // Error
 const NotFound = React.lazy(() => import('../views/error/NotFound'))

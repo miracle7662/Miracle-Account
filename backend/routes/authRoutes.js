@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 
+// Initial login route (username/password only)
+router.post('/initial-login', authController.initialLogin);
+
 // Login route
 router.post('/login', authController.login);
 
