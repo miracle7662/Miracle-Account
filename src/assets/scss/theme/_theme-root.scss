@@ -3,6 +3,8 @@
 <--! Theme Root !-->
 <--!----------------------------------------------------------------!-->
 */
+
+@use 'theme-variables' as *;
 :root {
   --#{$prefix}header-height: 72px;
   --#{$prefix}leftbar-width: 280px;

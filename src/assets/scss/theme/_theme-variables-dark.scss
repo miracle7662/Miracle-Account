@@ -3,6 +3,8 @@
 <--! Dark Variables !-->
 <--!----------------------------------------------------------------!-->
 */
+
+@use 'theme-variables' as *;
 html[data-bs-theme="dark"] {
 
     // GRAY-DARK

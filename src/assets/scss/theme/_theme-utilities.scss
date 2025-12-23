@@ -3,6 +3,8 @@
 <--! Theme Utilities !-->
 <--!----------------------------------------------------------------!-->
 */
+
+@use './theme-variables' as *;
 $utilities: (
     "font-size-custom": (property: font-size,
         class: fs,
