@@ -77,15 +77,15 @@ $color-contrast-dark: $black;
 $color-contrast-light: $white;
 
 // fusv-disable
-$blue-100: tint-color($blue, 80%);
-$blue-200: tint-color($blue, 60%);
-$blue-300: tint-color($blue, 40%);
-$blue-400: tint-color($blue, 20%);
+$blue-100: color.adjust($blue, $lightness: 80%);
+$blue-200: color.adjust($blue, $lightness: 60%);
+$blue-300: color.adjust($blue, $lightness: 40%);
+$blue-400: color.adjust($blue, $lightness: 20%);
 $blue-500: $blue;
-$blue-600: shade-color($blue, 20%);
-$blue-700: shade-color($blue, 40%);
-$blue-800: shade-color($blue, 60%);
-$blue-900: shade-color($blue, 80%);
+$blue-600: color.adjust($blue, $lightness: -20%);
+$blue-700: color.adjust($blue, $lightness: -40%);
+$blue-800: color.adjust($blue, $lightness: -60%);
+$blue-900: color.adjust($blue, $lightness: -80%);
 
 $indigo-100: tint-color($indigo, 80%);
 $indigo-200: tint-color($indigo, 60%);

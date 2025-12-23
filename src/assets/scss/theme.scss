@@ -27,27 +27,27 @@
 @import './node_modules/bootstrap/scss/bootstrap';
 
 // Structure
-@import 'structure/apps';
-@import 'structure/vertical-nav';
-@import 'structure/horizontal-nav';
-@import 'structure/header';
-@import 'structure/content';
-@import 'structure/footer';
-@import 'structure/megumenu';
-@import 'structure/livechat';
+@use 'structure/apps' as *;
+@use 'structure/vertical-nav' as *;
+@use 'structure/horizontal-nav' as *;
+@use 'structure/header' as *;
+@use 'structure/content' as *;
+@use 'structure/footer' as *;
+@use 'structure/megumenu' as *;
+@use 'structure/livechat' as *;
 
 // Options
 @import 'options/options';
 
 // Dashboard
-@import 'ovewrite/dashbaords/dashbaord';
+@use 'ovewrite/dashbaords/dashbaord' as *;
 
 // Apps
 @import 'ovewrite/apps/calendar';
 
 // Pages
-@import 'ovewrite/pages/profile';
-@import 'ovewrite/pages/auth';
+@use 'ovewrite/pages/profile' as *;
+@use 'ovewrite/pages/auth' as *;
 
 // Components
 @import 'ovewrite/components/base/root';
@@ -64,21 +64,21 @@
 @import 'ovewrite/components/base/offcanvas';
 @import 'ovewrite/components/base/preloader';
 @import 'ovewrite/components/base/miscellaneous';
-@import 'ovewrite/components/icons/icons';
-@import 'ovewrite/components/tables/tables';
-@import 'ovewrite/components/charts/apexcharts';
-@import 'ovewrite/components/forms/adv-checks';
-@import 'ovewrite/components/forms/adv-radios';
-@import 'ovewrite/components/forms/adv-switches';
-@import 'ovewrite/components/forms/checks-radios';
-@import 'ovewrite/components/forms/nouislider';
-@import 'ovewrite/components/editors/quill';
-@import 'ovewrite/components/editors/tinymce';
-@import 'ovewrite/components/pickers/flatpickr';
-@import 'ovewrite/components/pickers/daterangepicker';
-@import 'ovewrite/components/maps/vector';
-@import 'ovewrite/components/extended/simplebar';
-@import 'ovewrite/components/extended/react-select';
-@import 'ovewrite/components/extended/sweetalert2';
-@import 'ovewrite/components/extended/slick-slider';
-@import 'ovewrite/components/extended/dropzone';
+@use 'ovewrite/components/icons/icons' as *;
+@use 'ovewrite/components/tables/tables' as *;
+@use 'ovewrite/components/charts/apexcharts' as *;
+@use 'ovewrite/components/forms/adv-checks' as *;
+@use 'ovewrite/components/forms/adv-radios' as *;
+@use 'ovewrite/components/forms/adv-switches' as *;
+@use 'ovewrite/components/forms/checks-radios' as *;
+@use 'ovewrite/components/forms/nouislider' as *;
+@use 'ovewrite/components/editors/quill' as *;
+@use 'ovewrite/components/editors/tinymce' as *;
+@use 'ovewrite/components/pickers/flatpickr' as *;
+@use 'ovewrite/components/pickers/daterangepicker' as *;
+@use 'ovewrite/components/maps/vector' as *;
+@use 'ovewrite/components/extended/simplebar' as *;
+@use 'ovewrite/components/extended/react-select' as *;
+@use 'ovewrite/components/extended/sweetalert2' as *;
+@use 'ovewrite/components/extended/slick-slider' as *;
+@use 'ovewrite/components/extended/dropzone' as *;
