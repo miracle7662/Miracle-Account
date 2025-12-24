@@ -1,0 +1,35 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Offcanvas SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@mixin generate-offcanvas-theme() {
+  @each $color, $value in $theme-colors {
+    .offcanvas-theme-#{$color} {
+      color: $white;
+      background-color: $value;
+      border-color: tint-color($value, 90%) !important;
+
+      .offcanvas-header {
+        .offcanvas-title {
+          color: $white;
+        }
+      }
+    }
+
+    // Generate offcanvas backdrop color
+    .offcanvas-backdrop {
+      @each $color-bg, $color-value in $theme-colors {
+        &.offcanvas-theme-#{$color-bg} {
+          background-color: tint-color($color-value, 80%);
+        }
+      }
+    }
+  }
+}
+
+@include generate-offcanvas-theme();
+
+.offcanvas-backdrop {
+  backdrop-filter: blur(4px);
+}

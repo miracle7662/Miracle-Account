@@ -1,0 +1,102 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Card SCSS  !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+@each $variant,
+$color in $theme-colors {
+	$lighter-border-color: lighten($color, 5%);
+
+	.text-bg-#{$variant} {
+
+		.card-header,
+		.card-title,
+		.card-body,
+		.card-footer {
+			color: $white;
+			border-color: $lighter-border-color;
+		}
+	}
+
+	.text-bg-light {
+		&.text-bg-#{$variant} {
+			background-color: $lighter-border-color;
+
+			.card-header,
+			.card-title,
+			.card-body,
+			.card-footer {
+				color: $dark;
+				border-color: $lighter-border-color;
+			}
+		}
+	}
+}
+
+$card-components: (
+	".card": "card",
+	".card-header": "card-header",
+	".card-title": "card-title",
+	".card-body": "card-body",
+	".card-footer": "card-footer",
+);
+
+@mixin card-flush {
+	border: none !important;
+}
+
+@mixin card-hover-animation {
+	transition: transform 0.3s ease-in-out;
+
+	&:hover {
+		transform: translate3d(0, -0.3125rem, 0);
+	}
+}
+
+@each $selector,
+$class in $card-components {
+	#{$selector} {
+		&.card-flush {
+			@include card-flush;
+		}
+
+		.card-flush & {
+			@include card-flush;
+		}
+
+		&.card-hover {
+			@include card-hover-animation;
+		}
+	}
+}
+
+$height-values: (
+	100: calc(100% - #{$grid-gutter-width}),
+	75: calc(75% - #{$grid-gutter-width}),
+	50: calc(50% - #{$grid-gutter-width}),
+	33: calc(33.33% - #{$grid-gutter-width}),
+	25: calc(25% - #{$grid-gutter-width}),
+);
+
+@mixin card-stretch-heights {
+
+	@each $height,
+	$value in $height-values {
+		.card-stretch-#{$height} {
+			height: $value;
+		}
+	}
+}
+
+@include card-stretch-heights;
+
+.card {
+
+	@each $color,
+	$value in $theme-colors {
+		&.bg-#{$color} {
+			box-shadow: 0 10px 10px -1px transparentize($value, 0.7);
+		}
+	}
+}

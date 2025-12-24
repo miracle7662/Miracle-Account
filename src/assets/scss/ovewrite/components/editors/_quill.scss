@@ -1,0 +1,94 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Quill Editor SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.ql-snow {
+    .ql-picker {
+        color: var(--#{$prefix}dark) !important;
+    }
+
+    .ql-picker-options {
+        background-color: var(--#{$prefix}tertiary-bg) !important;
+    }
+
+    &.ql-toolbar {
+        font-family: inherit !important;
+        border-color: var(--#{$prefix}border-color) !important;
+
+        border-top-left-radius: $border-radius-sm;
+        border-top-right-radius: $border-radius-sm;
+
+
+        .ql-picker .ql-stroke,
+        button .ql-stroke {
+            stroke: var(--#{$prefix}dark) !important;
+        }
+
+        .ql-fill,
+        .ql-stroke.ql-fill {
+            fill: var(--#{$prefix}dark) !important;
+        }
+
+        .ql-picker.ql-expanded {
+            .ql-picker-label {
+                color: var(--#{$prefix}dark) !important;
+                border-color: var(--#{$prefix}border-color) !important;
+                border-radius: $border-radius-sm !important;
+            }
+
+            .ql-picker-options {
+                border-color: var(--#{$prefix}border-color) !important;
+                border-radius: 0 0 0.3rem 0.3rem !important;
+                box-shadow: $box-shadow-sm !important;
+            }
+        }
+
+
+        .ql-picker.ql-active .ql-fill,
+        .ql-picker.ql-active .ql-stroke,
+        .ql-picker.ql-expanded .ql-fill,
+        .ql-picker.ql-expanded .ql-stroke,
+        .ql-picker:focus .ql-fill,
+        .ql-picker:focus .ql-stroke,
+        .ql-picker:hover .ql-fill,
+        .ql-picker:hover .ql-stroke,
+        button.ql-active .ql-fill,
+        button.ql-active .ql-stroke,
+        button.ql-expanded .ql-fill,
+        button.ql-expanded .ql-stroke,
+        button:focus .ql-fill,
+        button:focus .ql-stroke,
+        button:hover .ql-fill,
+        button:hover .ql-stroke {
+            stroke: var(--#{$prefix}primary) !important;
+        }
+
+        .ql-picker.ql-active .ql-fill,
+        .ql-picker.ql-expanded .ql-fill,
+        .ql-picker:focus .ql-fill,
+        .ql-picker:hover .ql-fill,
+        button.ql-active .ql-fill,
+        button.ql-expanded .ql-fill,
+        button:focus .ql-fill,
+        button:hover .ql-fill {
+            fill: var(--#{$prefix}primary) !important;
+        }
+    }
+
+    &.ql-container {
+        font-size: inherit !important;
+        font-family: inherit !important;
+        border-color: var(--#{$prefix}border-color) !important;
+        border-bottom-left-radius: $border-radius-sm;
+        border-bottom-right-radius: $border-radius-sm;
+    }
+
+    .ql-editor {
+        min-height: 150px;
+
+        &.ql-blank:before {
+            color: var(--#{$prefix}dark) !important;
+        }
+    }
+}

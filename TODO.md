@@ -1,0 +1,3 @@
+- [x] Copy test_logo.png to backend/uploads/logo.png
+- [x] Add route in backend/server.js to serve /logo.png
+- [ ] Restart the backend server and test the logo display in sidebar

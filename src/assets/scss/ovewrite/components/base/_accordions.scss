@@ -1,0 +1,68 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Accordion SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+.accordion {
+	.accordion-button {
+		font-weight: $font-weight-semibold;
+	}
+
+	&.accordion-icon {
+		.accordion-button::after {
+			background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23888' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
+			transform: scale(0.7) !important;
+		}
+
+		.accordion-button:not(.collapsed)::after {
+			background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23888' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
+		}
+	}
+
+	&.accordion-reversed {
+		.accordion-button {
+			@extend .accordion-button;
+
+			&:before {
+				@extend ::after;
+				display: block !important;
+				margin-left: 0 !important;
+				margin-right: 0.5rem !important; // extra space between text and icon
+			}
+
+			&:after {
+				display: none;
+			}
+		}
+	}
+
+	&.accordion-rev-icon {
+		.accordion-button::after {
+			color: var(--#{$prefix}primary);
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><circle cx="256" cy="256" r="236.17" style="" fill="currentColor" data-original="%231138f7" class="" opacity="1"></circle><path d="M256 512C114.853 512 0 397.167 0 256 0 114.853 114.853 0 256 0c141.167 0 256 114.853 256 256 0 141.167-114.833 256-256 256zm0-472.341C136.705 39.659 39.659 136.705 39.659 256S136.705 472.341 256 472.341 472.341 375.275 472.341 256c0-119.295-97.046-216.341-216.341-216.341z" style="" fill="currentColor" data-original="%231138f7" class="" opacity="1"></path><path d="M256 373.193c-10.946 0-19.83-8.864-19.83-19.83V155.067c0-10.946 8.884-19.83 19.83-19.83 10.946 0 19.83 8.884 19.83 19.83v198.296c0 10.966-8.884 19.83-19.83 19.83z" style="" fill="%23ffffff" data-original="%23ffffff" class=""></path><path d="M355.148 274.045H156.852c-10.946 0-19.83-8.884-19.83-19.83 0-10.946 8.884-19.83 19.83-19.83h198.296c10.966 0 19.83 8.884 19.83 19.83 0 10.946-8.864 19.83-19.83 19.83z" style="" fill="%23ffffff" data-original="%23ffffff" class=""></path></g></svg>');
+			transform: scale(0.7) !important;
+		}
+
+		.accordion-button:not(.collapsed)::after {
+			color: var(--#{$prefix}primary);
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><circle cx="256" cy="256" r="236.17" style="" fill="currentColor" data-original="%231138f7" class="" opacity="1"></circle><path d="M256 512C114.853 512 0 397.167 0 256 0 114.853 114.853 0 256 0c141.167 0 256 114.853 256 256 0 141.167-114.833 256-256 256zm0-472.341C136.705 39.659 39.659 136.705 39.659 256S136.705 472.341 256 472.341 472.341 375.275 472.341 256c0-119.295-97.046-216.341-216.341-216.341z" style="" fill="currentColor" data-original="%231138f7" class="" opacity="1"></path><path d="M355.148 273.866H156.852c-10.946 0-19.83-8.884-19.83-19.83s8.884-19.83 19.83-19.83h198.296c10.966 0 19.83 8.884 19.83 19.83s-8.864 19.83-19.83 19.83z" style="" fill="%23ffffff" data-original="%23ffffff"></path></g></svg>');
+		}
+
+		.accordion-button {
+			@extend .accordion-button;
+
+			&:before {
+				@extend ::after;
+				display: block !important;
+				margin-left: 0 !important;
+				margin-right: 0.75rem !important;
+				transform: scale(1.1) !important;
+			}
+
+			&:after {
+				display: none;
+			}
+		}
+	}
+}

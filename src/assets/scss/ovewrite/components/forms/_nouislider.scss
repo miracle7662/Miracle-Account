@@ -1,0 +1,60 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! noUiSlider SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.noUi-target {
+	height: 0.5rem !important;
+	background: var(--#{$prefix}secondary-bg) !important;
+	border: 1px solid var(--#{$prefix}border-color) !important;
+	border-radius: $border-radius-sm !important;
+	box-shadow: none !important;
+
+	.noUi-connect {
+		background: var(--#{$prefix}primary) !important;
+	}
+
+	.noUi-handle {
+		width: 1rem !important;
+		height: 1rem !important;
+		top: -0.3rem !important;
+		right: -0.375rem !important;
+		border-radius: 50% !important;
+		border: 0.1875rem solid var(--#{$prefix}border-color) !important;
+		background: var(--#{$prefix}primary) !important;
+		box-shadow: none !important;
+		outline: none !important;
+
+		&:after,
+		&:before {
+			content: none !important;
+		}
+	}
+
+	&.noUi-vertical {
+		width: 0.5rem !important;
+
+		.noUi-origin {
+			top: 0 !important;
+			width: 0 !important;
+		}
+
+		.noUi-handle {
+			right: -0.3rem !important;
+		}
+	}
+
+	.noUi-marker-horizontal {
+		&.noUi-marker {
+			width: 1px !important;
+			background: var(--#{$prefix}gray-400) !important;
+		}
+	}
+
+	.noUi-tooltip {
+		padding: 0.15rem 0.5rem !important;
+		color: var(--#{$prefix}dark) !important;
+		background: var(--#{$prefix}secondary-bg) !important;
+		border-color: var(--#{$prefix}border-color) !important;
+	}
+}

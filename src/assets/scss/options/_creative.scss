@@ -1,0 +1,88 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Creative Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-content-skin='creative'] {
+  body {
+    --#{$prefix}body-bg: var(--#{$prefix}primary-bg-subtle);
+  }
+
+  .leftside-menu {
+    border: 1px solid transparent !important;
+    box-shadow: var(--#{$prefix}box-shadow-leftside-menu);
+  }
+
+  .card,
+  .header-inner,
+  .header-public,
+  .topnav-content,
+  .dropdown-menu,
+  .accordion-item,
+  .flatpickr-calendar {
+    border: 1px solid transparent !important;
+    box-shadow: var(--#{$prefix}box-shadow-modern) !important;
+  }
+
+  &[data-navigation-type='horizontal'] {
+    body {
+      .header-inner {
+        box-shadow: none !important;
+      }
+
+      .topnav-content {
+        border-bottom: 1px solid transparent;
+        box-shadow: var(--#{$prefix}box-shadow-modern);
+      }
+    }
+  }
+
+  &[data-bs-theme='dark'] {
+    --#{$prefix}tertiary-bg: var(--#{$prefix}tertiary-bg-dark);
+    --#{$prefix}secondary-bg-rgb: var(--#{$prefix}secondary-bg-dark-rgb);
+
+    .leftside-menu {
+      border: 1px solid transparent !important;
+      box-shadow: var(--#{$prefix}box-shadow-leftside-menu-dark);
+    }
+
+    .card,
+    .header-inner,
+    .topnav-content,
+    .dropdown-menu,
+    .accordion-item {
+      box-shadow: var(--#{$prefix}box-shadow-modern-dark);
+    }
+
+    &[data-color-scheme='primary'] {
+      --#{$prefix}tertiary-bg: var(--#{$prefix}tertiary-bg-dark-primary);
+      --#{$prefix}tertiary-bg-dark: var(--#{$prefix}tertiary-bg-dark-primary);
+      --#{$prefix}border-color: var(--#{$prefix}border-color-dark-primary);
+
+      .btn-neutral {
+        --#{$prefix}btn-bg: #{shade-color($primary, 75%)};
+        --#{$prefix}btn-hover-bg: #{shade-color($primary, 75%)};
+        --#{$prefix}btn-active-bg: #{shade-color($primary, 75%)};
+        --#{$prefix}btn-border-color: #{shade-color($primary, 65%)};
+        --#{$prefix}btn-hover-border-color: #{shade-color($primary, 65%)};
+        --#{$prefix}btn-active-border-color: #{shade-color($primary, 65%)};
+      }
+
+      .form-check-input {
+        --#{$prefix}form-check-bg: #{shade-color($primary, 65%)};
+        --#{$prefix}border-color: #{shade-color($primary, 65%)};
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  html[data-content-skin='creative'] {
+    .header-navbar {
+      .megamenu {
+        border: 1px solid transparent !important;
+        box-shadow: var(--#{$prefix}box-shadow-modern-revert);
+      }
+    }
+  }
+}

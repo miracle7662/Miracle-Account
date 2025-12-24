@@ -1,0 +1,310 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Color Scheme  !-->
+<--!----------------------------------------------------------------!-->
+*/
+$color-schemes: (
+  success: $success,
+  warning: $warning,
+  info: $info,
+  danger: $danger,
+  secondary: $secondary,
+);
+
+@mixin setTheme($theme, $color, $shade: 0) {
+  --#{$prefix}primary: var(--#{$prefix}#{$theme});
+  --#{$prefix}primary-rgb: var(--#{$prefix}#{$theme}-rgb);
+  --#{$prefix}primary-bg-subtle: var(--#{$prefix}#{$theme}-bg-subtle);
+  --#{$prefix}component-active-color: var(--#{$prefix}#{$theme});
+  --#{$prefix}component-active-bg: var(--#{$prefix}#{$theme});
+  --#{$prefix}link-hover-color: var(--#{$prefix}#{$theme});
+  --#{$prefix}link-hover-color-rgb: var(--#{$prefix}#{$theme}-rgb);
+  --#{$prefix}input-border-color: var(--#{$prefix}#{$theme});
+
+  /* <--! Navigation !--> */
+  --#{$prefix}menu-item-active-bg: #{rgba($color, 0.1)};
+
+  /* <--! UI Elements !--> */
+  .btn-primary {
+    --#{$prefix}btn-bg: var(--#{$prefix}#{$theme});
+    --#{$prefix}btn-hover-bg: #{shade-color($color, $shade)};
+    --#{$prefix}btn-active-bg: #{shade-color($color, $shade)};
+    --#{$prefix}btn-disabled-bg: var(--#{$prefix}#{$theme});
+    --#{$prefix}btn-border-color: var(--#{$prefix}#{$theme});
+    --#{$prefix}btn-hover-border-color: #{shade-color($color, $shade)};
+    --#{$prefix}btn-active-border-color: #{shade-color($color, $shade)};
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$theme});
+  }
+
+  .btn-soft-primary {
+    --#{$prefix}btn-color: #{$color};
+    --#{$prefix}btn-bg: #{rgba($color, 0.1)};
+    --#{$prefix}btn-border-color: #{transparent};
+    --#{$prefix}btn-hover-bg: #{$color};
+    --#{$prefix}btn-hover-border-color: #{$color};
+    --#{$prefix}btn-active-color: #{$white};
+    --#{$prefix}btn-active-bg: #{$color};
+    --#{$prefix}btn-active-border-color: #{$color};
+  }
+
+  .btn-outline-primary {
+    --#{$prefix}btn-color: #{$color};
+    --#{$prefix}btn-border-color: #{$color};
+    --#{$prefix}btn-hover-bg: #{$color};
+    --#{$prefix}btn-hover-border-color: #{$color};
+    --#{$prefix}btn-active-bg: #{$color};
+    --#{$prefix}btn-active-border-color: #{$color};
+    --#{$prefix}btn-disabled-color: #{$color};
+    --#{$prefix}btn-disabled-border-color: #{$color};
+  }
+
+  .btn-soft-outline-primary {
+    --#{$prefix}btn-color: #{$color};
+    --#{$prefix}btn-bg: #{rgba($color, 0.1)};
+    --#{$prefix}btn-border-color: #{$color};
+    --#{$prefix}btn-hover-bg: #{$color};
+    --#{$prefix}btn-hover-border-color: #{$color};
+    --#{$prefix}btn-active-bg: #{$color};
+    --#{$prefix}btn-active-border-color: #{$color};
+  }
+
+  .btn-solidtext-primary {
+    --#{$prefix}btn-color: #{$color};
+    --#{$prefix}btn-hover-bg: #{$color};
+    --#{$prefix}btn-hover-border-color: #{$color};
+    --#{$prefix}btn-active-bg: #{$color};
+    --#{$prefix}btn-active-border-color: #{$color};
+  }
+
+  .btn-softtext-primary {
+    --#{$prefix}btn-color: #{$color};
+    --#{$prefix}btn-hover-color: #{$color};
+    --#{$prefix}btn-hover-bg: #{rgba($color, 0.1)};
+    --#{$prefix}btn-active-color: #{$color};
+    --#{$prefix}btn-active-bg: #{rgba($color, 0.1)};
+  }
+
+  .card {
+    &-primary {
+      .card-header,
+      .card-title,
+      .card-body,
+      .card-footer {
+        border-color: #{lighten($color, 5%)};
+      }
+    }
+
+    &.bg-primary {
+      box-shadow: 0 10px 10px -1px transparentize($color, 0.7);
+    }
+  }
+
+  .dropdown-primary {
+    .dropdown-menu {
+      background-color: var(--#{$prefix}#{$theme});
+      border-color: var(--#{$prefix}#{$theme});
+
+      .dropdown-item {
+        &:hover,
+        &:hover,
+        &:active {
+          background-color: lighten($color, 10%);
+        }
+      }
+
+      .dropdown-divider {
+        border-color: #{tint-color($color, 10%)};
+      }
+    }
+  }
+
+  .dropdown-soft-primary {
+    .dropdown-menu {
+      background-color: tint-color($color, 90%);
+      border-color: tint-color($color, 85%);
+
+      .dropdown-item {
+        color: $color;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $color;
+          background-color: tint-color($color, 80%);
+        }
+      }
+
+      .dropdown-divider {
+        border-color: tint-color($color, 85%);
+      }
+    }
+  }
+
+  .modal-theme-primary {
+    .modal-content {
+      background-color: var(--#{$prefix}#{$theme});
+      border-color: var(--#{$prefix}#{$theme});
+
+      .modal-header,
+      .modal-footer {
+        border-color: #{tint-color($color, 10%)};
+      }
+    }
+  }
+
+  .nav-theme-tabs-primary {
+    .nav-link {
+      &.show,
+      &.active,
+      &:hover:not(.disabled) {
+        background-color: var(--#{$prefix}#{$theme});
+        border-color: var(--#{$prefix}#{$theme});
+      }
+    }
+  }
+
+  .nav-rich-content-primary {
+    .nav-link {
+      &.active,
+      &.show,
+      &:hover:not(.disabled) {
+        color: $color;
+        background-color: rgba($color, 15%);
+        border-color: rgba($color, 30%);
+
+        .nav-rich-content-title,
+        .nav-rich-content-text {
+          color: $color;
+        }
+      }
+    }
+  }
+
+  .popover-primary {
+    .popover-header {
+      background-color: #{darken($color, 5%)};
+      border-color: #{darken($color, 5%)};
+    }
+  }
+
+  .alert-primary {
+    --#{$prefix}alert-bg: var(--#{$prefix}#{$theme}-bg-subtle);
+    --#{$prefix}alert-border-color: var(--#{$prefix}#{$theme}-subtle);
+  }
+
+  /* <--! Creative & Dark !--> */
+  &[data-content-skin='creative'][data-bs-theme='dark'] {
+    --#{$prefix}border-color: #{shade-color($color, 70%)};
+    --#{$prefix}tertiary-bg-dark: #{shade-color($color, 75%)};
+    --#{$prefix}secondary-bg-subtle: var(--#{$prefix}#{$theme}-bg-subtle);
+
+    .bg-body-tertiary {
+      background-color: #{shade-color($color, 75%)} !important;
+    }
+
+    .bg-body-secondary {
+      background-color: #{shade-color($color, 70%)} !important;
+    }
+
+    .btn-neutral {
+      --#{$prefix}btn-bg: #{shade-color($color, 70%)};
+      --#{$prefix}btn-hover-bg: #{shade-color($color, 70%)};
+      --#{$prefix}btn-active-bg: #{shade-color($color, 70%)};
+      --#{$prefix}btn-border-color: #{shade-color($color, 60%)};
+      --#{$prefix}btn-hover-border-color: #{shade-color($color, 60%)};
+      --#{$prefix}btn-active-border-color: #{shade-color($color, 60%)};
+    }
+
+    .form-check-input {
+      --#{$prefix}form-check-bg: #{shade-color($color, 70%)};
+    }
+  }
+
+  /* <--! Navigation Brand Colors !--> */
+  &[data-navigation-skin='brand'],
+  &[data-navigation-skin='brand'][data-navigation-menu='solid'],
+  &[data-navigation-skin='brand'][data-navigation-type='horizontal'] {
+    --#{$prefix}menu-item-color: #{$gray-200};
+    --#{$prefix}menu-dot-color: #{$gray-200};
+    --#{$prefix}menu-item-hover-color: #{$gray-900};
+    --#{$prefix}menu-item-active-color: #{$gray-200};
+    --#{$prefix}menu-item-active-bg: #{darken($color, 10%)};
+    .leftside-menu {
+      --#{$prefix}dark: #{$gray-200};
+      --#{$prefix}primary: #{$gray-200};
+      --#{$prefix}secondary-color: #{$gray-200};
+      --#{$prefix}tertiary-bg: #{$color};
+      .side-nav {
+        .nav-title {
+          color: #{$gray-900};
+        }
+      }
+      .nav-card {
+        .text-primary {
+          color: #{$gray-200} !important;
+        }
+      }
+    }
+    .wrapper {
+      .topnav-content {
+        --#{$prefix}dark: #{$gray-200};
+        --#{$prefix}primary: #{$gray-900};
+        --#{$prefix}tertiary-bg: #{$color};
+        --#{$prefix}border-color: #{$color};
+      }
+    }
+  }
+  &[data-bs-theme='dark'][data-navigation-skin='brand'] {
+    --#{$prefix}menu-item-color: #{$gray-200};
+    --#{$prefix}menu-dot-color: #{$gray-200};
+    --#{$prefix}menu-item-hover-color: #{$color};
+    --#{$prefix}menu-item-active-color: #{$color};
+    --#{$prefix}menu-item-active-bg: #{rgba($color, 0.1)};
+  }
+
+  /* <--! Navigation Transparent Colors !--> */
+  &[data-navigation-skin='transparent'] {
+    --#{$prefix}menu-dot-color: #{$gray-500};
+    --#{$prefix}menu-item-color: #{$gray-700};
+    --#{$prefix}menu-item-hover-color: #{$color};
+    --#{$prefix}menu-item-active-color: #{$color};
+    --#{$prefix}menu-item-active-bg: #{rgba($color, 0.1)};
+    .leftside-menu {
+      --#{$prefix}tertiary-bg: #{transparent};
+    }
+  }
+
+  /* <--! Navigation Menu Colors !--> */
+  &[data-navigation-menu='solid'] {
+    --#{$prefix}menu-item-color: #{$gray-700};
+    --#{$prefix}menu-dot-color: #{$gray-500};
+    --#{$prefix}menu-item-hover-color: #{$color};
+    --#{$prefix}menu-item-active-color: #{$gray-200};
+    --#{$prefix}menu-item-active-bg: #{$color};
+    .leftside-menu {
+      .side-nav {
+        .active {
+          .active {
+            .active {
+              --#{$prefix}menu-dot-color: #{$color};
+              --#{$prefix}menu-item-active-color: #{$color};
+            }
+          }
+        }
+      }
+      .nav-card {
+        background-color: #{darken($color, 10%)};
+        border-color: #{darken($color, 12%)};
+        .text-primary {
+          color: #{$gray-200} !important;
+        }
+      }
+    }
+  }
+}
+
+@each $theme, $color in $color-schemes {
+  html[data-color-scheme='#{$theme}'] {
+    @include setTheme($theme, $color, 10%);
+  }
+}

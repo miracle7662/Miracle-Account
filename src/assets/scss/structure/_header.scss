@@ -1,0 +1,280 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Header SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+
+.header-navbar {
+  top: 0;
+  z-index: 1039;
+  position: sticky;
+  
+  //height: 1rem ;
+  // min-height: $header-height;
+  // transition: $transition-base;
+
+  .header-inner {
+    width: 100%;
+    position: relative;
+    height: 1.5rem;
+    min-height: 1.5rem;
+    border-bottom: 1px solid var(--#{$prefix}border-color);
+    background-color: var(--#{$prefix}tertiary-bg);
+    display: flex;
+  align-items: left;
+     justify-content: space-between;
+
+    .header-btn {
+      z-index: 1;
+      padding: 0 0;
+      min-width: 42px;
+      height: $header-height;
+      border: none;
+      line-height: 0;
+      font-size: 15px;
+      cursor: pointer;
+      position: relative;
+      color: $header-item-color;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .fi {
+        font-size: $font-size-lg;
+      }
+    }
+
+    .dropdown {
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        position: static;
+      }
+
+      .dropdown-menu {
+        transform: translate(0px, 72px) !important;
+        animation: 0.3s ease-in-out 0s normal forwards 1 fadein;
+
+        @keyframes fadein {
+          from {
+            opacity: 0;
+            margin-top: 1rem;
+          }
+
+          to {
+            opacity: 1;
+            margin-top: 0rem;
+          }
+        }
+
+        @include media-breakpoint-down(sm) {
+          width: calc(100% - 2rem);
+          left: 1rem !important;
+          right: 1rem !important;
+        }
+
+        .dropdown-menu {
+          transform: translate(0px, 50px) !important;
+        }
+      }
+    }
+  }
+
+  .barnd-logo {
+    display: none;
+  }
+
+  .navbar-toggle {
+    float: left;
+    display: none;
+    cursor: pointer;
+    position: relative;
+    padding: 1rem 1rem;
+    background-color: transparent;
+    color: $header-item-color;
+    border: none;
+
+    .lines {
+      height: 0.75rem;
+      width: 1.2rem;
+      display: block;
+      position: relative;
+      transition: $transition-base;
+    }
+
+    span {
+      height: 1px;
+      width: 100%;
+      background-color: $header-item-color;
+      display: block;
+      margin-bottom: 0.25rem;
+      transition: $transition-base;
+    }
+
+    &.open {
+      span {
+        position: absolute;
+
+        &:first-child {
+          top: 7px;
+          transform: rotate(45deg);
+        }
+
+        &:nth-child(2) {
+          visibility: hidden;
+        }
+
+        &:last-child {
+          top: 7px;
+          width: 100%;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Header Theme Dark !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-header-skin='dark'],
+html[data-bs-theme='dark'] {
+  .header-navbar {
+    --#{$prefix}primary-bg-subtle: #2c3742;
+    --#{$prefix}secondary-bg-subtle: #343a40;
+    --#{$prefix}success-bg-subtle: #2c4135;
+    --#{$prefix}info-bg-subtle: #1d3a45;
+    --#{$prefix}warning-bg-subtle: #433725;
+    --#{$prefix}danger-bg-subtle: #412d2f;
+    --#{$prefix}light-bg-subtle: #535d67;
+    --#{$prefix}dark-bg-subtle: #33393f;
+
+    .header-inner {
+      border-color: $gray-dark-200;
+      background-color: var(--#{$prefix}tertiary-bg-dark);
+
+      .barnd-logo {
+        .logo-text {
+          color: $white;
+        }
+      }
+
+      #light-dark-mode {
+        .dark-light-icon-toggle {
+          &::before {
+            content: '\f277';
+          }
+        }
+      }
+
+      .dropdown {
+        .dropdown-menu {
+          background-color: var(--#{$prefix}tertiary-bg-dark);
+          border-color: $gray-dark-200;
+
+          .dropdown-item {
+            color: $gray-dark-600;
+          }
+        }
+      }
+
+      .list-group-item {
+        color: $gray-dark-600;
+        background-color: var(--#{$prefix}tertiary-bg-dark);
+        border-color: $gray-dark-200;
+      }
+
+      .border,
+      .border-top,
+      .border-end,
+      .border-start,
+      .border-bottom,
+      .dropdown-divider {
+        border-color: $gray-dark-200 !important;
+      }
+
+      a,
+      .text-dark,
+      .header-btn,
+      .btn-megumenu {
+        color: $gray-dark-800 !important;
+
+        &:hover {
+          color: var(--#{$prefix}primary) !important;
+        }
+      }
+    }
+  }
+
+  &[data-navigation-type='horizontal'] {
+    .header-navbar {
+      width: 4rem;
+      border-color: $gray-dark-200 !important;
+      background-color: var(--#{$prefix}tertiary-bg-dark);
+    }
+  }
+}
+
+html[data-header-skin='dark'] {
+  .header-navbar {
+    --#{$prefix}heading-color: var(--#{$prefix}gray-200);
+  }
+
+  .search-modal {
+    .modal-content,
+    .form-control,
+    .input-group-text {
+      border-color: $gray-dark-200;
+      background-color: var(--#{$prefix}tertiary-bg-dark) !important;
+    }
+
+    .border,
+    .modal-header,
+    .modal-footer {
+      border-color: $gray-dark-200 !important;
+    }
+
+    a,
+    .text-dark {
+      color: $gray-dark-800 !important;
+
+      &:hover {
+        color: var(--#{$prefix}primary) !important;
+      }
+    }
+  }
+
+  .activity-offcanvas {
+    --#{$prefix}heading-color: var(--#{$prefix}gray-200);
+    border-color: $gray-dark-200;
+    background-color: var(--#{$prefix}tertiary-bg-dark);
+
+    a,
+    .text-dark {
+      color: $gray-dark-800 !important;
+
+      &:hover {
+        color: var(--#{$prefix}primary) !important;
+      }
+    }
+
+    .border,
+    .offcanvas-header {
+      --#{$prefix}border-color: #{$gray-dark-200} !important;
+    }
+
+    .list-group-item {
+      color: $gray-dark-800;
+      border-color: $gray-dark-200 !important;
+      background-color: var(--#{$prefix}tertiary-bg-dark);
+
+      .list-timeline-icon {
+        border-color: $gray-dark-200 !important;
+        background-color: var(--#{$prefix}tertiary-bg-dark) !important;
+      }
+    }
+  }
+}

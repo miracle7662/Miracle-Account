@@ -1,0 +1,23 @@
+{
+  "farBillNumber": "FB0006",
+  "FarmerID": 18,
+  "FarmerName": "lll",
+  "farBillDate": "2025-11-29",
+  "farfromDate": "2025-11-29",
+  "fartoDate": "2025-11-29",
+  "TotalItems": 5,
+  "TotalAmount": 100,
+  "commission": 5,
+  "Hamali": 10,
+  "Vatav": 20,
+  "TransportCharges": 5,
+  "Discount": 0,
+  "TotalExpense": 40,
+  "FinalBillAmount": 60,
+  "PreviousBalance": 0,
+  "PreviousAdvance": 0,
+  "PreviousBalanceDate": "",
+  "KatalaAmount": 10,
+  "items": [],
+  "Created_by_id": 1
+}
