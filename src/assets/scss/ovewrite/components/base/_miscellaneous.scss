@@ -1,0 +1,252 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Textturncare SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@mixin text-truncate($lines) {
+  width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @supports (-webkit-line-clamp: #{$lines}) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box !important;
+    -webkit-line-clamp: #{$lines};
+    -webkit-box-orient: vertical;
+  }
+}
+
+.text-truncate-1-line {
+  @include text-truncate(1);
+}
+
+.text-truncate-2-line {
+  @include text-truncate(2);
+}
+
+.text-truncate-3-line {
+  @include text-truncate(3);
+}
+
+.text-truncate-4-line {
+  @include text-truncate(4);
+}
+
+.text-truncate-5-line {
+  @include text-truncate(5);
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! PerfectScrollbar SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.ps__rail-y {
+  z-index: 99;
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Offcanvas SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@mixin generate-offcanvas-theme() {
+  @each $color, $value in $theme-colors {
+    .offcanvas-theme-#{$color} {
+      color: $white;
+      background-color: $value;
+      border-color: $value !important;
+
+      .offcanvas-header {
+        .offcanvas-title {
+          color: $white;
+        }
+      }
+    }
+
+    // Generate offcanvas backdrop color
+    .offcanvas-backdrop {
+      @each $color-bg, $color-value in $theme-colors {
+        &.offcanvas-theme-#{$color-bg} {
+          background-color: tint-color($color-value, 80%);
+        }
+      }
+    }
+  }
+}
+
+@include generate-offcanvas-theme();
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Popovers SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@each $color, $value in $theme-colors {
+  $popover-header-bg: shade-color($value, 5%);
+  $popover-header-border: tint-color($value, 5%);
+
+  .popover {
+    &-#{$color} {
+      --#{$prefix}popover-bg: var(--#{$prefix}#{$color});
+      --#{$prefix}popover-border-color: var(--#{$prefix}#{$color});
+      --#{$prefix}popover-header-color: #{$white};
+      --#{$prefix}popover-body-color: #{$white};
+
+      .popover-header {
+        background-color: $popover-header-bg;
+        border-color: $popover-header-border;
+      }
+    }
+  }
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Tooltips SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+@mixin tooltip($theme-colors) {
+  .tooltip {
+    @each $color, $value in $theme-colors {
+      &-#{$color} {
+        --#{$prefix}tooltip-color: var(--#{$prefix}white);
+        --#{$prefix}tooltip-bg: var(--#{$prefix}#{$color});
+      }
+    }
+  }
+}
+
+@include tooltip($theme-colors);
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Docs SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.docs-details-wrapper {
+  transition: $transition-base;
+
+  .docs-nav-sidebar {
+    top: 5.5rem;
+    z-index: 1019;
+    position: sticky;
+    width: 365px;
+    max-width: 100%;
+    height: calc(100vh - 10rem);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    background-color: var(--#{$prefix}tertiary-bg);
+    opacity: 1;
+    visibility: visible;
+    border-radius: $border-radius-md;
+    transition: $transition-base;
+
+    @include media-breakpoint-down(xl) {
+      height: 100vh !important;
+      left: 0;
+      top: 4rem;
+      bottom: 0;
+      width: 300px;
+      margin-right: 0;
+      position: fixed;
+      padding: 1.5rem;
+      overflow-y: scroll;
+      border-right: 1px solid var(--#{$prefix}border-color);
+      opacity: 0;
+      visibility: hidden;
+      transform: $transform-translate-3d--100;
+    }
+  }
+
+  .docs-nav-content {
+    width: 100%;
+    border-left: 1px solid var(--#{$prefix}border-color);
+    transition: $transition-base;
+
+    @include media-breakpoint-down(xl) {
+      border-left: none;
+    }
+  }
+
+  &.docs-nav-sidebar-toggle {
+    .docs-nav-sidebar {
+      opacity: 0;
+      visibility: hidden;
+
+      @include media-breakpoint-down(xl) {
+        opacity: 1;
+        visibility: visible;
+        transform: $transform-translate-3d-0;
+      }
+    }
+
+    .docs-nav-content {
+      margin-left: -365px;
+      border-left: 1px solid transparent;
+
+      @include media-breakpoint-down(xl) {
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
+.directory-tree {
+  ul {
+    list-style: none;
+  }
+
+  .folder {
+    margin-bottom: 0.5rem;
+    display: inline-block;
+
+    &:before {
+      content: '📁 ├── ';
+      color: var(--#{$prefix}dark);
+    }
+
+    &:hover {
+      color: var(--#{$prefix}primary);
+    }
+  }
+
+  .file {
+    margin-bottom: 0.5rem;
+    display: inline-block;
+
+    &:before {
+      content: '📄 ├── ';
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.docs-table {
+  white-space: normal;
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! Code SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+code {
+  padding: 0.15rem 0.25rem;
+  font-size: $font-size-base;
+  border: 1px solid var(--#{$prefix}border-color);
+  background-color: var(--#{$prefix}secondary-bg-subtle);
+  border-radius: $border-radius-sm;
+  line-height: $line-height-lg;
+  white-space: normal;
+}
+
+.prism-max-height {
+  max-height: 350px;
+  white-space: pre-wrap;
+}

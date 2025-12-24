@@ -1,0 +1,97 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! DateRangePicker SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.rdrCalendarWrapper {
+    color: var(--#{$prefix}dark) !important;
+    font-size: $font-size-base !important;
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+    border: 1px solid var(--#{$prefix}border-color) !important;
+    border-radius: $border-radius-sm !important;
+}
+
+.rdrDateDisplayWrapper {
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+}
+
+.rdrDateDisplayItem {
+    box-shadow: none !important;
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+
+    input {
+        text-transform: uppercase;
+        font-size: $font-size-sm !important;
+        font-weight: $font-weight-medium !important;
+    }
+}
+
+.rdrPprevButton,
+.rdrNextButton {
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+}
+
+
+.rdrMonthAndYearPickers {
+    select {
+        text-transform: uppercase;
+        text-align: start !important;
+        color: var(--#{$prefix}dark) !important;
+        font-size: $font-size-sm !important;
+        font-weight: $font-weight-bold !important;
+        background-color: var(--#{$prefix}tertiary-bg) !important;
+    }
+}
+
+.rdrWeekDay {
+    text-transform: uppercase;
+    color: var(--#{$prefix}dark) !important;
+    font-size: $font-size-xs !important;
+    font-weight: $font-weight-bold !important;
+}
+
+.rdrDayNumber {
+    font-size: $font-size-sm !important;
+    font-weight: $font-weight-medium !important;
+
+    span {
+        color: var(--#{$prefix}secondary) !important;
+    }
+}
+
+.rdrDayPassive {
+    opacity: 0.2 !important;
+}
+
+.rdrDay:not(.rdrDayPassive) {
+
+    .rdrInRange~.rdrDayNumber span,
+    .rdrStartEdge~.rdrDayNumber span,
+    .rdrEndEdge~.rdrDayNumber span,
+    .rdrSelected~.rdrDayNumber span {
+        color: $white !important;
+    }
+}
+
+.rdrDefinedRangesWrapper {
+    border: solid 1px var(--#{$prefix}border-color) !important;
+    border-right: none !important;
+    background: var(--#{$prefix}tertiary-bg) !important;
+}
+
+.rdrStaticRange {
+    border-bottom: 1px solid var(--#{$prefix}border-color) !important;
+    background: var(--#{$prefix}tertiary-bg) !important;
+}
+
+.rdrStaticRange:hover .rdrStaticRangeLabel,
+.rdrStaticRange:focus .rdrStaticRangeLabel {
+    color: var(--#{$prefix}dark) !important;
+    background: var(--#{$prefix}body-bg) !important;
+}
+
+.rdrInputRangeInput {
+    color: var(--#{$prefix}dark) !important;
+    background: var(--#{$prefix}tertiary-bg) !important;
+    border-color: var(--#{$prefix}border-color) !important;
+}

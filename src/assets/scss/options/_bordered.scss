@@ -1,0 +1,29 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Bordered Theme !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-content-skin='border'] {
+  --#{$prefix}border-color: var(--#{$prefix}gray-300);
+
+  body {
+    --#{$prefix}body-bg: var(--#{$prefix}body-bg-smooth);
+
+    .dropdown-menu {
+      box-shadow: none;
+    }
+    .header-navbar {
+      .header-inner {
+        border-top: 1px solid var(--#{$prefix}border-color);
+        border-left: 1px solid var(--#{$prefix}border-color);
+        border-right: 1px solid var(--#{$prefix}border-color);
+      }
+    }
+  }
+}
+
+html[data-content-skin='border'][data-bs-theme='dark'] {
+  body {
+    --#{$prefix}body-bg: var(--#{$prefix}body-bg-dark);
+  }
+}

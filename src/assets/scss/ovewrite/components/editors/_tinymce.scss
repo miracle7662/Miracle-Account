@@ -1,0 +1,117 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! TinyMCE SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+.tox {
+    color: var(--#{$prefix}dark) !important;
+    border-color: var(--#{$prefix}border-color) !important;
+
+    .tox-toolbar,
+    .tox-toolbar__overflow,
+    .tox-toolbar__primary,
+    &:not(.tox-tinymce-inline) .tox-editor-header {
+        background-image: none !important;
+        background-color: var(--#{$prefix}tertiary-bg) !important;
+        box-shadow: none !important;
+    }
+
+    &:not(.tox-tinymce-inline) .tox-editor-header {
+        border-bottom: 1px solid var(--#{$prefix}border-color) !important;
+    }
+
+    .tox-tbtn {
+        svg {
+            fill: var(--#{$prefix}dark) !important;
+        }
+    }
+
+    .tox-tbtn--bespoke {
+        color: var(--#{$prefix}dark) !important;
+        background-color: var(--#{$prefix}tertiary-bg) !important;
+    }
+
+    .tox-menu,
+    .tox-menubar,
+    .tox-toolbar-overlord {
+        background-color: var(--#{$prefix}tertiary-bg) !important;
+    }
+
+    .tox-mbtn,
+    .tox-collection__item-label>*,
+    .tox-collection__item {
+        color: var(--#{$prefix}dark) !important;
+    }
+
+    .tox .tox-collection--list {
+        .tox-collection__group {
+            border-color: var(--#{$prefix}border-color) !important;
+        }
+    }
+
+    .tox-edit-area__iframe,
+    .tox-statusbar {
+        color: var(--#{$prefix}secondary) !important;
+        background-color: var(--#{$prefix}tertiary-bg) !important;
+        border-color: var(--#{$prefix}border-color) !important;
+    }
+
+
+}
+
+.mce-content-body {
+    color: var(--#{$prefix}secondary) !important;
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+    border-color: var(--#{$prefix}border-color) !important;
+}
+
+.rdrDateDisplayItemActive,
+.rdrDayStartPreview,
+.rdrDayEndPreview {
+    border-color: var(--#{$prefix}primary) !important;
+}
+
+.rdrStartEdge,
+.rdrEndEdge {
+    color: var(--#{$prefix}primary) !important;
+}
+
+.rdrSelected,
+.rdrInRange,
+.rdrStartEdge,
+.rdrEndEdge {
+    background: var(--#{$prefix}primary) !important;
+}
+
+.rdrDayToday .rdrDayNumber span:after {
+    background: var(--#{$prefix}primary) !important;
+}
+
+@include media-breakpoint-down(md) {
+    .rdrCalendarWrapper {
+        width: -webkit-fill-available !important;
+
+        .rdrMonth {
+            width: 100% !important;
+            max-width: -webkit-fill-available;
+        }
+    }
+
+    .rdrDateRangePickerWrapper {
+        width: -webkit-fill-available !important;
+        display: inline-block !important;
+
+        .rdrDefinedRangesWrapper {
+            width: -webkit-fill-available !important;
+            border-right: 1px solid var(--#{$prefix}border-color) !important;
+            border-bottom: none !important;
+        }
+    }
+}
+
+@include media-breakpoint-down(xl) {
+    .rdrMonthsHorizontal {
+        display: inline !important;
+    }
+}

@@ -1,0 +1,183 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! PRISM SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+
+.code {
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+	height: 35rem;
+	color: #fff;
+	background: #212529;
+	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-size: 1em;
+	text-align: left;
+	text-shadow: 0 -0.1em 0.2em #212529;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+	&::selection {
+		text-shadow: none;
+		background: hsla(0, 0%, 93%, 0.15);
+	}
+
+	&::-moz-selection {
+		text-shadow: none;
+		background: hsla(0, 0%, 93%, 0.15);
+	}
+}
+
+:not(pre)>code[class*="language-"] {
+	border-radius: 0.3em;
+	border: 0.13em solid #212529;
+	box-shadow: 1px 1px 0.3em -0.1em #212529 inset;
+	padding: 0.15em 0.2em 0.05em;
+	white-space: normal;
+}
+
+code:not([class*="language-"]) {
+	line-height: inherit;
+	font-size: 0.8125rem;
+	/* margin: 0 0.5rem; */
+	padding: 0 0.4rem 0.2rem;
+	background-color: rgba($gray-200, 0.75);
+	border-radius: $border-radius-sm;
+}
+
+pre[class*="language-"] {
+	border-radius: 0.5em;
+	box-shadow: 1px 1px 0.5em #212529 inset;
+	margin: 0.5em 0;
+	overflow: auto;
+	border: none;
+	padding: 0.25rem 1.5rem 1.5rem;
+
+	&::selection {
+		background: #27292a;
+	}
+
+	&::-moz-selection {
+		background: #27292a;
+	}
+}
+
+.token {
+	position: relative;
+	z-index: 1;
+
+	&.cdata,
+	&.comment,
+	&.doctype,
+	&.prolog {
+		color: #777;
+	}
+
+	&.punctuation {
+		opacity: 0.7;
+	}
+
+	&.namespace {
+		opacity: 0.7;
+	}
+
+	&.boolean,
+	&.deleted,
+	&.number,
+	&.tag {
+		color: #ce6849;
+	}
+
+	&.builtin,
+	&.constant,
+	&.keyword,
+	&.property,
+	&.selector,
+	&.symbol {
+		color: #f9ed99;
+	}
+
+	.language-css &.string,
+	.style &.string,
+	&.attr-name,
+	&.attr-value,
+	&.char,
+	&.entity,
+	&.inserted,
+	&.operator,
+	&.string,
+	&.url,
+	&.variable {
+		color: #909e6a;
+	}
+
+	.language-css &.atrule {
+		color: #7385a5;
+	}
+
+	&.important,
+	&.regex {
+		color: #e8c062;
+	}
+
+	&.bold,
+	&.important {
+		font-weight: 700;
+	}
+
+	&.italic {
+		font-style: italic;
+	}
+
+	&.entity {
+		cursor: help;
+	}
+
+	.language-markup &.attr-name,
+	.language-markup &.punctuation,
+	.language-markup &.tag {
+		color: #ac885c;
+	}
+}
+
+.line-highlight.line-highlight {
+	background: hsla(0, 0%, 33%, 0.25);
+	background: linear-gradient(to right, hsla(0, 0%, 33%, 0.1) 70%, hsla(0, 0%, 33%, 0));
+	border-bottom: 1px dashed #545454;
+	border-top: 1px dashed #545454;
+	margin-top: 0.75em;
+	z-index: 0;
+
+	&:before,
+	&[data-end]:after {
+		background-color: #8693a6;
+		color: #f4f1ef;
+	}
+}
+
+/*
+<--!----------------------------------------------------------------!-->
+<--! THEME DARK SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-bs-theme="dark"] {
+	code:not([class*="language-"]) {
+		background-color: rgba($gray-dark-200, 0.75);
+	}
+}

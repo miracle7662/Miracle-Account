@@ -1,0 +1,84 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! jsTree SCSS !-->
+<--!----------------------------------------------------------------!-->
+*/
+.jstree-default {
+
+    .jstree-node,
+    .jstree-icon {
+        background-image: url(./../images/general/jstree_32px.png);
+    }
+
+    .jstree-themeicon-custom {
+        background-image: none !important;
+    }
+
+    .jstree-icon {
+        font-size: 0.85rem;
+
+        &:empty {
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+        }
+    }
+
+    .jstree-anchor {
+        font-weight: $font-weight-medium;
+    }
+
+    .jstree-clicked,
+    .jstree-hovered,
+    .jstree-wholerow-clicked {
+        background: var(--#{$prefix}gray-200);
+        border-radius: $border-radius-sm;
+        box-shadow: none;
+    }
+
+    .jstree-disabled {
+        cursor: not-allowed;
+        line-height: auto;
+        height: auto;
+        opacity: 0.7;
+    }
+}
+
+.vakata-context,
+.vakata-context ul {
+    border: 0;
+    min-width: 150px;
+    padding: 0.5rem 0;
+    font-size: $font-size-base;
+    font-family: $font-family-base;
+    background: var(--#{$prefix}body-bg);
+    box-shadow: $box-shadow-sm;
+    border-radius: $border-radius-sm;
+}
+
+.vakata-context li>a {
+    color: var(--#{$prefix}dark);
+
+}
+
+.vakata-context li a,
+.vakata-context ul li a {
+    border: 0;
+    padding: 0 1rem;
+}
+
+.vakata-context .vakata-context-separator a,
+.vakata-context-rtl .vakata-context-separator a {
+    background-color: var(--#{$prefix}border-color);
+}
+
+.vakata-context li>a:hover {
+    color: var(--#{$prefix}primary);
+    background-color: var(--#{$prefix}link-bg);
+    box-shadow: none;
+}
+
+.vakata-context li a .vakata-contextmenu-sep,
+.vakata-context ul li a .vakata-contextmenu-sep {
+    display: none;
+}

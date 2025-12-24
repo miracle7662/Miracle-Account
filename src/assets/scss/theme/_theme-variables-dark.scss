@@ -1,0 +1,35 @@
+/*
+<--!----------------------------------------------------------------!-->
+<--! Dark Variables !-->
+<--!----------------------------------------------------------------!-->
+*/
+html[data-bs-theme="dark"] {
+
+    // GRAY-DARK
+    @each $color,
+    $value in $grays-dark {
+        --#{$prefix}gray-#{$color}: #{$value};
+    }
+
+    /* Dark Colors SCSS */
+    --#{$prefix}dark: #{$light};
+    --#{$prefix}light: #{$dark};
+    --#{$prefix}heading-color: #{$white};
+    --#{$prefix}link-hover-color: #{$primary};
+    --#{$prefix}dark-rgb: #{to-rgb($light)};
+    --#{$prefix}border-color: #{$gray-dark-200};
+    --#{$prefix}light-rgb: #{to-rgb($gray-dark-300)};
+    --#{$prefix}link-color: #{to-rgb($gray-dark-900)};
+    --#{$prefix}link-color-rgb: #{to-rgb($gray-dark-900)};
+    --#{$prefix}link-hover-color-rgb: #{to-rgb($primary)};
+
+    /* Dark Subtle SCSS */
+    --#{$prefix}primary-bg-subtle: #2c3742;
+    --#{$prefix}secondary-bg-subtle: #343a40;
+    --#{$prefix}success-bg-subtle: #2c4135;
+    --#{$prefix}info-bg-subtle: #1d3a45;
+    --#{$prefix}warning-bg-subtle: #433725;
+    --#{$prefix}danger-bg-subtle: #412d2f;
+    --#{$prefix}light-bg-subtle: #535d67;
+    --#{$prefix}dark-bg-subtle: #33393f;
+}
