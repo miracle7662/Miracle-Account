@@ -23,9 +23,6 @@ const PrivateRoute = ({ component: Component, roles, ...rest }: any) => {
             />
           )
         }
-        if (isAuthenticated) {
-          return <Navigate to={{ pathname: '/' }} />
-        }
         return <Component {...props} />
       }}
     />

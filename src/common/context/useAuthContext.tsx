@@ -44,6 +44,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       : undefined,
   )
 
+  const [companyid, setCompanyid] = useState<number | null>(
+    localStorage.getItem('selected_companyid')
+      ? parseInt(localStorage.getItem('selected_companyid') || '0')
+      : null,
+  )
+
+  const [yearid, setYearid] = useState<number | null>(
+    localStorage.getItem('selected_yearid')
+      ? parseInt(localStorage.getItem('selected_yearid') || '0')
+      : null,
+  )
+
   const saveSession = useCallback(
     (user: User) => {
       sessionStorage.setItem(authSessionKey, JSON.stringify(user))
@@ -56,8 +68,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const removeSession = useCallback(() => {
     sessionStorage.removeItem(authSessionKey)
     localStorage.removeItem(authSessionKey)
+    localStorage.removeItem('selected_companyid')
+    localStorage.removeItem('selected_yearid')
     setUser(undefined)
+    setCompanyid(null)
+    setYearid(null)
   }, [setUser])
+
+  const saveCompanyYear = useCallback(
+    (companyId: number, yearId: number) => {
+      localStorage.setItem('selected_companyid', companyId.toString())
+      localStorage.setItem('selected_yearid', yearId.toString())
+      setCompanyid(companyId)
+      setYearid(yearId)
+    },
+    [],
+  )
 
   const [loading, setLoading] = useState(true)
 
@@ -91,9 +117,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           <AuthContext.Provider
             value={{
               user,
+              companyid,
+              yearid,
               isAuthenticated: Boolean(user),
               saveSession,
               removeSession,
+              saveCompanyYear,
             }}
           >
             {children}

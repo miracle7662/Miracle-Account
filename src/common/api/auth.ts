@@ -16,13 +16,11 @@ export const loginUserWithEmail = async (email: string, password: string) => {
 }
 
 // Login user with username (for Hotel Admin)
-export const loginUserWithUsername = async (username: string, password: string, company?: string, year?: string) => {
+export const loginUserWithUsername = async (username: string, password: string) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/auth/login`, {
       username,
-      password,
-      company,
-      year
+      password
     })
     return response.data
   } catch (error: any) {

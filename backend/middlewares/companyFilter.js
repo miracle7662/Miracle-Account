@@ -1,12 +1,15 @@
 module.exports = async (req, res, next) => {
   try {
-    if (!req.user || !req.user.companyid) {
-      return res.status(403).json({ message: "Company ID missing in token" });
+    // Extract companyid and yearid from headers (set by frontend after company/year selection)
+    const companyid = req.headers['x-company-id'];
+    const yearid = req.headers['x-year-id'];
+
+    if (!companyid) {
+      return res.status(403).json({ message: "Company ID missing in request headers" });
     }
 
-    // Extract companyid and yearid from JWT payload (req.user is set by authenticateToken middleware)
-    req.companyid = req.user.companyid;  // accessible in all controllers
-    req.yearid = req.user.yearid;        // optional, may be null
+    req.companyid = companyid;  // accessible in all controllers
+    req.yearid = yearid;        // optional, may be null
 
     next();
   } catch (error) {

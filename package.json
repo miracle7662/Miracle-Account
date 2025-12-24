@@ -23,7 +23,7 @@
     "bootstrap-admin-dashboard"
   ],
   "scripts": {
-    "dev": "vite --host",
+    "dev": "npx vite --host",
     "build": "tsc && vite build",
     "electron-start": "electron main.cjs",
     "dev-electron": "concurrently \"npm run dev\" \"npm run electron-start\"",

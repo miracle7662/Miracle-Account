@@ -32,7 +32,7 @@ export default function useLogin() {
       setTimeout(() => {
         if (res.token) {
           saveSession(res)
-          navigate(redirectUrl)
+          navigate('/auth/company-year-selection')
         }
       }, 1500)
     } catch (error) {
@@ -43,13 +43,13 @@ export default function useLogin() {
 
   const loginWithUsername = async (
     event: React.FormEvent<HTMLFormElement>,
-    { username, password, company, year }: { username: string; password: string; company?: string; year?: string },
+    { username, password }: { username: string; password: string },
   ) => {
     event.preventDefault()
     setLoading(true)
 
     try {
-      const res: any = await loginUserWithUsername(username, password, company, year)
+      const res: any = await loginUserWithUsername(username, password)
 
       setLoading(false)
       toast.success('Login successful!')
@@ -57,7 +57,7 @@ export default function useLogin() {
       setTimeout(() => {
         if (res.token) {
           saveSession(res)
-          navigate(redirectUrl)
+          navigate('/auth/company-year-selection')
         }
       }, 1500)
     } catch (error) {
