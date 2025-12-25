@@ -31,7 +31,7 @@ exports.authenticateToken = (req, res, next) => {
 // Login user
 exports.login = async (req, res) => {
     try {
-        const { username, password, company, year } = req.body;
+        const { username, password } = req.body;
 
         if (!password) {
             return res.status(400).json({ message: 'Password is required' });
@@ -41,23 +41,15 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Username is required' });
         }
 
-        if (!company) {
-            return res.status(400).json({ message: 'Company is required' });
-        }
-
-        if (!year) {
-            return res.status(400).json({ message: 'Year is required' });
-        }
-
-        // Find user by companyid, username, yearid from mst_users table
+        // Find user by username from mst_users table (ignore companyid and yearid)
         const user = db.prepare(`
             SELECT u.*
             FROM mst_users u
-            WHERE u.companyid = ? AND u.username = ? AND u.yearid = ? AND u.status = 1
-        `).get(company, username, year);
+            WHERE u.username = ? AND u.status = 1
+        `).get(username);
 
         if (!user) {
-            return res.status(401).json({ message: 'Invalid login (User not found for this company)' });
+            return res.status(401).json({ message: 'Invalid login (User not found)' });
         }
 
         // Check password
@@ -69,33 +61,7 @@ exports.login = async (req, res) => {
         // Update last login
         db.prepare('UPDATE mst_users SET last_login = datetime(\'now\') WHERE userid = ?').run(user.userid);
 
-        // Fetch company details
-        let companyName = null;
-        const companyData = db.prepare(`
-            SELECT  company_name
-            FROM companymaster
-            WHERE companyid = ?
-        `).get(company);
-        if (companyData) {
-            companyName = companyData.company_name;
-        } else {
-            companyName = company; // Use the company name from request if not found in database
-        }
-
-        // Fetch year details using yearid
-        let yearValue = null;
-        const yearData = db.prepare(`
-            SELECT Year,yearid
-            FROM yearmaster
-            WHERE yearid = ?
-        `).get(year);
-        if (yearData) {
-            yearValue = yearData.Year;
-        } else {
-            yearValue = year; // Use the year value from request if not found in database
-        }
-
-        // Create JWT token
+        // Create JWT token (without companyid and yearid)
         const token = jwt.sign(
             {
                 userid: user.userid,
@@ -106,10 +72,6 @@ exports.login = async (req, res) => {
                 hotelid: user.hotelid,
                 outletid: user.outletid, // Ensure this is included
                 created_by_id: user.created_by_id || null, // Ensure it’s included, even if null
-                companyName: companyName,
-                year: yearValue,
-                companyid: company,
-                yearid: year
             },
             JWT_SECRET,
             { expiresIn: '24h' }
@@ -124,10 +86,6 @@ exports.login = async (req, res) => {
             role: user.role_level,
             role_level: user.role_level,
             created_by_id: user.created_by_id || null, // Ensure it’s included, even if null
-            companyName: companyName,
-            year: yearValue,
-            companyid: company,
-            yearid: year,
             token: token
         };
 
@@ -136,7 +94,7 @@ exports.login = async (req, res) => {
             console.log('🏨 Hotel Admin Login Details:');
             console.log('   Login User ID:', user.userid);
             console.log('   Username:', user.username);
-         
+
             console.log('   Full Name:', user.full_name);
             console.log('   Email:', user.email);
             console.log('   Phone:', user.phone);
@@ -156,6 +114,143 @@ exports.login = async (req, res) => {
 
     } catch (error) {
         console.error('Login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// Select company
+exports.selectCompany = async (req, res) => {
+    try {
+        const { companyid } = req.body;
+
+        if (!companyid) {
+            return res.status(400).json({ message: 'Company ID is required' });
+        }
+
+        // Verify JWT token
+        const authHeader = req.headers['authorization'];
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Authorization header missing or malformed" });
+        }
+        const token = authHeader.split(" ")[1];
+        const decoded = jwt.verify(token, JWT_SECRET);
+
+        // Check if company exists and is active
+        const company = db.prepare(`
+            SELECT companyid, company_name
+            FROM companymaster
+            WHERE companyid = ? AND status = 1
+        `).get(companyid);
+
+        if (!company) {
+            return res.status(404).json({ message: 'Company not found or inactive' });
+        }
+
+        // Create new JWT token with companyid
+        const newToken = jwt.sign(
+            {
+                userid: decoded.userid,
+                username: decoded.username,
+                email: decoded.email,
+                role_level: decoded.role_level,
+                brand_id: decoded.brand_id,
+                hotelid: decoded.hotelid,
+                outletid: decoded.outletid,
+                created_by_id: decoded.created_by_id || null,
+                companyid: company.companyid,
+                companyName: company.company_name
+            },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.json({
+            message: 'Company selected successfully',
+            company: {
+                companyid: company.companyid,
+                company_name: company.company_name
+            },
+            token: newToken
+        });
+
+    } catch (error) {
+        console.error('Select company error:', error);
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// Select year
+exports.selectYear = async (req, res) => {
+    try {
+        const { yearid } = req.body;
+
+        if (!yearid) {
+            return res.status(400).json({ message: 'Year ID is required' });
+        }
+
+        // Verify JWT token
+        const authHeader = req.headers['authorization'];
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Authorization header missing or malformed" });
+        }
+        const token = authHeader.split(" ")[1];
+        const decoded = jwt.verify(token, JWT_SECRET);
+
+        // Check if user has selected company
+        if (!decoded.companyid) {
+            return res.status(400).json({ message: 'Company must be selected first' });
+        }
+
+        // Check if year exists and is active
+        const year = db.prepare(`
+            SELECT yearid, Year, Startdate, Enddate
+            FROM yearmaster
+            WHERE yearid = ? AND status = 1
+        `).get(yearid);
+
+        if (!year) {
+            return res.status(404).json({ message: 'Year not found or inactive' });
+        }
+
+        // Create new JWT token with companyid and yearid
+        const newToken = jwt.sign(
+            {
+                userid: decoded.userid,
+                username: decoded.username,
+                email: decoded.email,
+                role_level: decoded.role_level,
+                brand_id: decoded.brand_id,
+                hotelid: decoded.hotelid,
+                outletid: decoded.outletid,
+                created_by_id: decoded.created_by_id || null,
+                companyid: decoded.companyid,
+                companyName: decoded.companyName,
+                yearid: year.yearid,
+                year: year.Year
+            },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.json({
+            message: 'Year selected successfully',
+            year: {
+                yearid: year.yearid,
+                Year: year.Year,
+                Startdate: year.Startdate,
+                Enddate: year.Enddate
+            },
+            token: newToken
+        });
+
+    } catch (error) {
+        console.error('Select year error:', error);
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
         res.status(500).json({ message: 'Internal server error' });
     }
 };

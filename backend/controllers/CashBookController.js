@@ -32,8 +32,8 @@ exports.createCashBook = (req, res) => {
             body.Amount,
             body.Description || null,
             body.Created_by_id || 1,
-            body.companyid,
-            body.yearid
+            req.companyid,
+            req.yearid
         );
 
         res.json({ message: "CashBook entry created successfully", CashBookID: result.lastInsertRowid });
@@ -113,10 +113,10 @@ exports.updateCashBook = (req, res) => {
 
     // Check ownership
     const exists = db.prepare(`
-      SELECT CashBookID 
+      SELECT CashBookID
       FROM CashBook
-      WHERE CashBookID = ? AND companyid = ?
-    `).get(id, companyid);
+      WHERE CashBookID = ? AND companyid = ? AND yearid = ?
+    `).get(id, companyid, yearid);
 
     if (!exists) {
       return res.status(404).json({ error: 'CashBook entry not found or access denied' });

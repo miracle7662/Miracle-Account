@@ -5,6 +5,12 @@ const authController = require('../controllers/authController');
 // Login route
 router.post('/login', authController.login);
 
+// Select company route
+router.post('/select-company', authController.selectCompany);
+
+// Select year route
+router.post('/select-year', authController.selectYear);
+
 // Get current user info
 router.get('/me', authController.getCurrentUser);
 
