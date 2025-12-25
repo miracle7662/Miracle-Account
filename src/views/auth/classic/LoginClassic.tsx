@@ -11,12 +11,12 @@ import { useTranslation } from 'react-i18next'
 const LoginClassic = () => {
   const { t } = useTranslation()
   const { removeSession } = useAuthContext()
-  const { loading, loginWithEmail, redirectUrl, isAuthenticated } = useLogin()
-  const [username, setUsername] = useState<string>('superadmin')
+  const { loading, loginWithEmail, isAuthenticated } = useLogin()
+  const [email, setEmail] = useState<string>('superadmin')
   const [password, setPassword] = useState<string>('superadmin123')
   const [rememberMe, setRememberMe] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [usernameError, setUsernameError] = useState<string | null>(null)
+  const [emailError, setEmailError] = useState<string | null>(null)
   const [passwordError, setPasswordError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -50,11 +50,11 @@ const LoginClassic = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const isUsernameValid = validateUsername(username)
+    const isEmailValid = validateEmail(email)
     const isPasswordValid = validatePassword(password)
 
-    if (isUsernameValid && isPasswordValid) {
-      loginWithEmail(e, { username, password })
+    if (isEmailValid && isPasswordValid) {
+      loginWithEmail(e, { email, password })
     }
   }
 
@@ -71,17 +71,17 @@ const LoginClassic = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Control
-                type="text"
-                placeholder="Username"
-                value={username}
+                type="email"
+                placeholder="Email"
+                value={email}
                 onChange={(e) => {
-                  setUsername(e.target.value)
-                  validateUsername(e.target.value)
+                  setEmail(e.target.value)
+                  validateEmail(e.target.value)
                 }}
-                isInvalid={!!usernameError}
+                isInvalid={!!emailError}
                 required
               />
-              <Form.Control.Feedback type="invalid">{usernameError}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{emailError}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3 position-relative">
               <Form.Control

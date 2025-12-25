@@ -579,22 +579,56 @@ exports.verifyCreatorPassword = async (req, res) => {
     }
 };
 
+// Get companies
+exports.getCompanies = async (req, res) => {
+    try {
+        const companies = db.prepare(`
+            SELECT companyid, company_name
+            FROM companymaster
+            WHERE status = 1
+            ORDER BY company_name
+        `).all();
+
+        res.json(companies);
+    } catch (error) {
+        console.error('Get companies error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// Get years
+exports.getYears = async (req, res) => {
+    try {
+        const years = db.prepare(`
+            SELECT yearid, Year, Startdate, Enddate
+            FROM yearmaster
+            WHERE status = 1
+            ORDER BY Year DESC
+        `).all();
+
+        res.json(years);
+    } catch (error) {
+        console.error('Get years error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 // Create initial SuperAdmin (if not exists)
 exports.createInitialSuperAdmin = async () => {
     try {
         // Check if SuperAdmin exists
         const existingSuperAdmin = db.prepare('SELECT userid FROM mst_users WHERE role_level = ?').get('superadmin');
-        
+
         if (!existingSuperAdmin) {
             const hashedPassword = await bcrypt.hash('superadmin123', 10);
-            
+
             const stmt = db.prepare(`
                 INSERT INTO mst_users (
-                    username, email, password, full_name, role_level, 
+                    username, email, password, full_name, role_level,
                     status, created_date
                 ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))
             `);
-            
+
             const result = stmt.run(
                 'superadmin',
                 'superadmin@miracle.com',
