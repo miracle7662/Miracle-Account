@@ -50,11 +50,11 @@ const LoginClassic = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const isEmailValid = validateEmail(email)
+    const isUsernameValid = validateUsername(username)
     const isPasswordValid = validatePassword(password)
 
-    if (isEmailValid && isPasswordValid) {
-      loginWithEmail(e, { email, password })
+    if (isUsernameValid && isPasswordValid) {
+      loginWithEmail(e, { username, password })
     }
   }
 

@@ -22,6 +22,8 @@ type User = {
   hotelid?: number
   companyName?: string
   year?: string
+  companyid?: number
+  yearid?: number
 }
 
 const AuthContext = createContext<any>({})

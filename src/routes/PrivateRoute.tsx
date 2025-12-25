@@ -9,7 +9,8 @@ import { useAuthContext } from '@/common'
  */
 
 const PrivateRoute = ({ component: Component, roles, ...rest }: any) => {
-  const { isAuthenticated } = useAuthContext()
+  const { user, isAuthenticated } = useAuthContext()
+
   return (
     <Route
       {...rest}
@@ -18,14 +19,34 @@ const PrivateRoute = ({ component: Component, roles, ...rest }: any) => {
           return (
             <Navigate
               to={{
-                pathname: '/auth/minimal/login',
+                pathname: '/auth/classic/login',
               }}
             />
           )
         }
-        if (isAuthenticated) {
-          return <Navigate to={{ pathname: '/' }} />
+
+        // Check if company is selected
+        if (!user?.companyid) {
+          return (
+            <Navigate
+              to={{
+                pathname: '/auth/company-selection',
+              }}
+            />
+          )
         }
+
+        // Check if year is selected
+        if (!user?.yearid) {
+          return (
+            <Navigate
+              to={{
+                pathname: '/auth/year-selection',
+              }}
+            />
+          )
+        }
+
         return <Component {...props} />
       }}
     />

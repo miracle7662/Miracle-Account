@@ -164,6 +164,8 @@ const Logout = React.lazy(() => import('../views/auth/Logout'))
 
 // Auth {{Classic}}
 const LoginClassic = React.lazy(() => import('../views/auth/classic/LoginClassic'))
+const CompanySelection = React.lazy(() => import('../views/auth/classic/CompanySelection'))
+const YearSelection = React.lazy(() => import('../views/auth/classic/YearSelection'))
 const RegisterClassic = React.lazy(() => import('../views/auth/classic/RegisterClassic'))
 const RegisterSuccessClassic = React.lazy(
   () => import('../views/auth/classic/RegisterSuccessClassic'),
@@ -1221,6 +1223,18 @@ const authRoutes: RoutesProps[] = [
             route: Route,
           },
         ],
+      },
+      {
+        path: '/auth/company-selection',
+        name: 'Company Selection',
+        element: <CompanySelection />,
+        route: Route,
+      },
+      {
+        path: '/auth/year-selection',
+        name: 'Year Selection',
+        element: <YearSelection />,
+        route: Route,
       },
     ],
   },
