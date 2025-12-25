@@ -44,6 +44,16 @@ const PLReport: React.FC = () => {
   const { t } = useTranslation();
   console.log('Translation function:', t);
   const { user } = useAuthContext();
+
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString; // If invalid date, return as is
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
   const [plData, setPlData] = useState<PLData | null>(null);
   const [loading, setLoading] = useState(false);
   const [fromDate, setFromDate] = useState(() => {
@@ -95,7 +105,7 @@ const PLReport: React.FC = () => {
 
     const doc = new jsPDF();
     doc.text('Profit & Loss Statement', 20, 10);
-    doc.text(`Period: ${plData.period.fromDate} to ${plData.period.toDate}`, 20, 20);
+    doc.text(`Period: ${formatDate(plData.period.fromDate)} to ${formatDate(plData.period.toDate)}`, 20, 20);
 
     // Revenue section
     let yPosition = 35;
@@ -164,7 +174,7 @@ const PLReport: React.FC = () => {
     // Revenue sheet
     const revenueData = [
       ['PROFIT & LOSS STATEMENT'],
-      [`Period: ${plData.period.fromDate} to ${plData.period.toDate}`],
+      [`Period: ${formatDate(plData.period.fromDate)} to ${formatDate(plData.period.toDate)}`],
       [''],
       ['REVENUE'],
       ['Category', 'Description', 'Amount', 'Count'],
@@ -208,7 +218,7 @@ const PLReport: React.FC = () => {
     const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
     XLSX.utils.book_append_sheet(workbook, summarySheet, 'Summary');
 
-    XLSX.writeFile(workbook, `PL_Report_${plData.period.fromDate}_to_${plData.period.toDate}.xlsx`);
+    XLSX.writeFile(workbook, `PL_Report_${formatDate(plData.period.fromDate)}_to_${formatDate(plData.period.toDate)}.xlsx`);
   };
 
   const formatCurrency = (amount: number) => {
@@ -269,7 +279,7 @@ const PLReport: React.FC = () => {
           <>
             {/* Period Info */}
             <Alert variant="info" className="mb-3">
-              <strong>Report Period:</strong> {plData.period.fromDate} to {plData.period.toDate}
+              <strong>Report Period:</strong> {formatDate(plData.period.fromDate)} to {formatDate(plData.period.toDate)}
             </Alert>
 
             <Row>

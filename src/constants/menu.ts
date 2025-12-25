@@ -191,7 +191,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         label: 'Outstanding',
         url: '/masterpages/OutstandingLedger',
         parentKey: 'masterPages',
-       icon: 'fi fi-rr-life-ring',
+       icon: 'fi fi-rr-alarm-clock',
 
       },
 
@@ -200,7 +200,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         label: 'Utility',
         url: '/masterpages/Utility',
        parentKey: 'masterPages',
-        icon: 'fi fi-rr-life-ring',
+        icon: 'fi fi-rr-tools',
 
        },
 
@@ -209,7 +209,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
          label: 'P&L Report',
          url: '/masterpages/PLReport',
          parentKey: 'masterPages',
-        icon: 'fi fi-rr-life-ring',
+        icon: 'fi fi-rr-chart-pie',
 
        },
 

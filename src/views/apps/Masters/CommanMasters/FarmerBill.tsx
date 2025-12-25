@@ -119,6 +119,7 @@ interface CustomModalProps {
   onDalaliChange: (value: number) => void;
   onHamaliChange: (value: number) => void;
   onVatavChange: (value: number) => void;
+  formatDate: (dateString: string | undefined) => string;
 }
 
 const CustomModal: React.FC<CustomModalProps> = memo(({
@@ -184,6 +185,7 @@ const CustomModal: React.FC<CustomModalProps> = memo(({
   onDalaliChange,
   onHamaliChange,
   onVatavChange,
+  formatDate,
 }) => {
   const { t } = useTranslation();
   const farmerSelectRef = useRef<any>(null);
@@ -222,7 +224,7 @@ const CustomModal: React.FC<CustomModalProps> = memo(({
         katala: Number(item.Katala || 0), // Set katala from the database field
         customerName: item.CustomerName, // Fetched from mandiledger
         soudano: item.SoudaNo,
-        soudaDate: new Date(item.SoudaDate).toLocaleDateString(), // Format date for display
+        soudaDate: item.SoudaDate,
         totalTel: Number(item.Quantity), // Assuming TotalTel is the same as Quantity
       }));
 
@@ -589,7 +591,7 @@ console.log('Grand Total:', grandTotal);
                     <tr key={item.soudaItemsId || index} style={{ verticalAlign: 'middle' }}>
                       <td style={{ border: '1px solid #dee2e6', padding: '6px', textAlign: 'center' }}>{index + 1}</td>
                       <td style={{ border: '1px solid #dee2e6', padding: '6px', textAlign: 'right' }}>{item.soudano || ''}</td>
-                      <td style={{ border: '1px solid #dee2e6', padding: '6px' }}>{item.soudaDate ? new Date(item.soudaDate).toLocaleDateString() : ''}</td>
+                      <td style={{ border: '1px solid #dee2e6', padding: '6px' }}>{item.soudaDate ? formatDate(item.soudaDate) : ''}</td>
                       <td style={{ border: '1px solid #dee2e6', padding: '6px' }}>{item.customerName || farmerName}</td>
                       <td style={{ border: '1px solid #dee2e6', padding: '6px', textAlign: 'right' }}>
                         {(item.farmerAmount).toFixed(2)}
@@ -836,6 +838,16 @@ const FarmerBillMaster: React.FC = () => {
   const { user } = useAuthContext();
   const [bills, setBills] = useState<CustomerBillHeader[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString; // If invalid date, return as is
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
   const [showModal, setShowModal] = useState(false);
   const [currentBill, setCurrentBill] = useState<CustomerBillHeader | null>(null);
   const [billNo, setBillNo] = useState('');
@@ -1349,14 +1361,14 @@ const totalBill = totalRows  - totalExpense;
 
       const previewHeader = {
         billNumber: data.farBillNumber,
-        billDate: new Date(data.farBillDate).toLocaleDateString(),
+        billDate: formatDate(data.farBillDate),
         customerName: data.FarmerName,
         farmerName: data.FarmerName,
         farmerno: data.FarmerID,
         farmerAddress: data.FarmerAddress || undefined,
-        fromDate: new Date(data.farfromDate).toLocaleDateString(),
-        toDate: new Date(data.fartoDate).toLocaleDateString(),
-        lastBillDate: data.PreviousBalanceDate || undefined,
+        fromDate: formatDate(data.farfromDate),
+        toDate: formatDate(data.fartoDate),
+        lastBillDate: data.PreviousBalanceDate ? formatDate(data.PreviousBalanceDate) : undefined,
         lastBalance: data.PreviousBalance || undefined,
         dalali: data.commission || undefined,
         shillak: data.Hamali || undefined,
@@ -1371,7 +1383,7 @@ const totalBill = totalRows  - totalExpense;
       };
 
       setPreviewBill(previewHeader);
-      setPreviewItems(data.details.map((d: any) => ({ farmerName: d.CustomerName || data.FarmerName, qty: d.Quantity, rate: d.FarmerAmount, amount: d.FarmerAmount * d.Quantity, soudaDate: new Date(d.SoudaDate).toLocaleDateString() })));
+      setPreviewItems(data.details.map((d: any) => ({ farmerName: d.CustomerName || data.FarmerName, qty: d.Quantity, rate: d.FarmerAmount, amount: d.FarmerAmount * d.Quantity, soudaDate: formatDate(d.SoudaDate) })));
       setShowPreviewModal(true);
     } catch (error) {
       toast.error('Failed to load bill for preview.');
@@ -1527,8 +1539,8 @@ const totalBill = totalRows  - totalExpense;
                   <tr key={bill.BillID}>
                     <td>{bill.BillNo}</td>
                     <td>{bill.CustomerName}</td>
-                    <td>{bill.BillDate}</td>
-                    <td>{bill.fromDate} to {bill.toDate}</td>
+                    <td>{formatDate(bill.BillDate)}</td>
+                    <td>{formatDate(bill.fromDate)} to {formatDate(bill.toDate)}</td>
                     <td>{bill.TotalCommission}</td>
                     <td>{bill.TotalItems}</td>
                     <td>{bill.TotalCustomerAmt}</td>
@@ -1616,6 +1628,7 @@ const totalBill = totalRows  - totalExpense;
         onDalaliChange={onDalaliChange}
         onHamaliChange={onHamaliChange}
         onVatavChange={onVatavChange}
+        formatDate={formatDate}
       />
 
       {previewBill && (

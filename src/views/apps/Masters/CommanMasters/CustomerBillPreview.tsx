@@ -82,6 +82,11 @@ const CustomerBillPreview: React.FC<CustomerBillPreviewProps> = ({
   const [customer, setCustomer] = useState<Customer | null>(null);
   const { user } = useAuthContext();
 
+  const formatDate = (date: string | undefined) => {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString();
+  };
+
   useEffect(() => {
     const fetchCompany = async () => {
       try {
@@ -483,7 +488,7 @@ const CustomerBillPreview: React.FC<CustomerBillPreviewProps> = ({
 
               <div style={{ display: "flex" }}>
                 <strong style={{ width: "60px" }}>दिनांक:</strong>
-                <span>{bill.BillDate}</span>
+                <span>{formatDate(bill.BillDate)}</span>
               </div>
             </div>
           </div>
@@ -597,7 +602,7 @@ const CustomerBillPreview: React.FC<CustomerBillPreviewProps> = ({
           }}
         >
      {[
-  { label: "मागील तारीख", value: bill.previousDate || "" },
+  { label: "मागील तारीख", value: formatDate(bill.previousDate) || "" },
   { label: "Advance", value: bill.previousAdvance || 0 },
   { label: "Katala", value: bill.TotalCommission || 0 },
 

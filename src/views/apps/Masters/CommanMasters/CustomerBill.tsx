@@ -110,6 +110,7 @@ interface CustomModalProps {
   handleEditItem: (index: number) => void;
   cancelEditItem: () => void;
   user: any;
+  formatDate: (date: string | undefined) => string;
 }
 
 const CustomModal: React.FC<CustomModalProps> = memo(({
@@ -803,6 +804,11 @@ const CustomerBillMaster: React.FC = () => {
   // const [billData, setBillData] = useState<any[]>([]);
   // const [billDataLoading, setBillDataLoading] = useState(false);
 
+  const formatDate = (date: string | undefined) => {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString();
+  };
+
   const calculateTotals = useCallback(() => {
     const totalItems = items.reduce((sum, item) => sum + item.qty, 0);
     const totalCustomerAmt = items.reduce((sum, item) => sum + (item.customerAmt * item.qty), 0);
@@ -1404,7 +1410,7 @@ const fetchBills = async () => {
                 filteredBills.map(bill => (
                   <tr key={bill.BillID}>
                     <td>{bill.custBillNumber}</td>
-                    <td>{bill.BillDate}</td>
+                    <td>{formatDate(bill.BillDate)}</td>
                     <td>{bill.CustomerName}</td>
                     <td>{bill.TotalItems}</td>
                     <td>{bill.TotalCustomerAmt}</td>
@@ -1484,6 +1490,7 @@ const fetchBills = async () => {
         handleEditItem={handleEditItem}
         cancelEditItem={cancelEditItem}
         user={user}
+        formatDate={formatDate}
       />
 
       {selectedBill && (

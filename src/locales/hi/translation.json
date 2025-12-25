@@ -439,6 +439,7 @@
       "id": "आईडी",
       "date": "तारीख",
       "voucher_no": "वाउचर संख्या",
+      "ledger_name": "लेजर नाम",
       "type": "प्रकार",
       "payment_mode": "भुगतान मोड",
       "payment_mode_label": "भुगतान मोड",

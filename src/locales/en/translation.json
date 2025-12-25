@@ -373,6 +373,7 @@
       "id": "ID",
       "date": "Date",
       "voucher_no": "Voucher No",
+      "ledger_name": "Ledger Name",
       "type": "Type",
       "payment_mode": "Payment Mode",
       "payment_mode_label": "Payment Mode",

@@ -90,6 +90,22 @@ const LedgerAccount: React.FC = () => {
     }).format(amount);
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const formatDescription = (description: string) => {
+    // Regex to match dates in yyyy-mm-dd format
+    const dateRegex = /\b(\d{4})-(\d{2})-(\d{2})\b/g;
+    return description.replace(dateRegex, (match, year, month, day) => {
+      return `${day}-${month}-${year}`;
+    });
+  };
+
   // Unified Entry Interface
   interface UnifiedEntry {
     id?: string; // This will be the index from map
@@ -345,9 +361,9 @@ const LedgerAccount: React.FC = () => {
                     ) : (
                       unifiedEntries.map((entry, index) => (
                         <tr key={index}>
-                          <td>{entry.Date}</td>
+                          <td>{formatDate(entry.Date)}</td>
                           <td>{entry.BillNo || 'N/A'}</td>
-                          <td>{entry.Description}</td>
+                          <td>{formatDescription(entry.Description)}</td>
                            <td className="text-end">{entry.TotalItems || 'N/A'}</td>
                           <td>
                             <Badge bg={getTypeBadgeVariant(entry.Type)}>
@@ -359,7 +375,7 @@ const LedgerAccount: React.FC = () => {
                           <td className={`text-end ${Number(entry.Balance) >= 0 ? 'text-success' : 'text-danger'}`}>
                             {formatCurrency(Number(entry.Balance))}
                           </td>
-                         
+
                         </tr>
                       ))
                     )}

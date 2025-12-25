@@ -597,7 +597,7 @@ WITH Combined AS (
         1 AS SortOrder,
         DATE(fb.farBillDate) AS Date,
         fb.farBillNumber AS BillNo,
-        'Farmer Bill' AS Description,
+        ('Farmer Bill (' || fb.farfromDate || ' to ' || fb.fartoDate || ')') AS Description,
         'Farmer Bill' AS Type,
         0 AS Debit,               -- FarmerBills now go in Credit
         fb.FinalBillAmount AS Credit,

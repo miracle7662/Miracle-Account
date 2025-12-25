@@ -47,6 +47,7 @@ const CashBookTablePreview: React.FC<CashBookTablePreviewProps> = ({
               <th>ID</th>
               <th>Date</th>
               <th>Voucher No</th>
+              <th>Ledger Name</th>
               <th>Type</th>
               <th>Payment Mode</th>
               <th>Amount</th>
@@ -56,7 +57,7 @@ const CashBookTablePreview: React.FC<CashBookTablePreviewProps> = ({
           <tbody>
             {entries.length === 0 ? (
               <tr>
-                <td colSpan={7} className="text-center">
+                <td colSpan={8} className="text-center">
                   No entries
                 </td>
               </tr>
@@ -66,6 +67,7 @@ const CashBookTablePreview: React.FC<CashBookTablePreviewProps> = ({
                   <td>{entry.CashBookID}</td>
                   <td>{entry.TransactionDate}</td>
                   <td>{entry.VoucherNumber || "-"}</td>
+                  <td>{entry.OppBankIDName || "-"}</td>
                   <td>{entry.TransactionType}</td>
                   <td>{entry.PaymentMode}</td>
                   <td>{entry.Amount.toFixed(2)}</td>

@@ -448,6 +448,16 @@ const CustomModal: React.FC<CustomModalProps> = memo(({
 const CashBook: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useAuthContext();
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+
   const [entries, setEntries] = useState<CashBookEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -728,11 +738,12 @@ const CashBook: React.FC = () => {
   const exportToPDF = () => {
     const doc = new jsPDF();
     doc.text(t('cash_book.export.pdf_title'), 20, 10);
-    const tableColumn = [t('cash_book.table.id'), t('cash_book.table.date'), t('cash_book.table.voucher_no'), t('cash_book.table.type'), t('cash_book.table.payment_mode_label'), t('cash_book.table.amount'), t('cash_book.table.description')];
+    const tableColumn = [t('cash_book.table.id'), t('cash_book.table.date'), t('cash_book.table.voucher_no'), t('cash_book.table.ledger_name'), t('cash_book.table.type'), t('cash_book.table.payment_mode_label'), t('cash_book.table.amount'), t('cash_book.table.description')];
     const tableRows = filteredEntries.map(entry => [
       entry.CashBookID?.toString() || '-',
       entry.TransactionDate,
       entry.VoucherNumber || '-',
+      entry.OppBankIDName || '-',
       entry.TransactionType,
       entry.PaymentMode,
       entry.Amount.toFixed(2),
@@ -752,6 +763,7 @@ const CashBook: React.FC = () => {
       [t('cash_book.table.id')]: entry.CashBookID,
       [t('cash_book.table.date')]: entry.TransactionDate,
       [t('cash_book.table.voucher_no')]: entry.VoucherNumber || '-',
+      [t('cash_book.table.ledger_name')]: entry.OppBankIDName || '-',
       [t('cash_book.table.type')]: entry.TransactionType,
       [t('cash_book.table.payment_mode')]: entry.PaymentMode,
       [t('cash_book.table.amount')]: entry.Amount,
@@ -818,6 +830,7 @@ const CashBook: React.FC = () => {
                   <th>{t('cash_book.table.id')}</th>
                   <th>{t('cash_book.table.date')}</th>
                   <th>{t('cash_book.table.voucher_no')}</th>
+                  <th>{t('cash_book.table.ledger_name')}</th>
                   <th>{t('cash_book.table.type')}</th>
                   <th>{t('cash_book.table.payment_mode_label')}</th>
                   <th>{t('cash_book.table.amount')}</th>
@@ -828,14 +841,15 @@ const CashBook: React.FC = () => {
               <tbody>
                 {paginatedEntries.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="text-center">{t('cash_book.table.no_entries')}</td>
+                    <td colSpan={9} className="text-center">{t('cash_book.table.no_entries')}</td>
                   </tr>
                 ) : (
                   paginatedEntries.map(entry => (
                     <tr key={entry.CashBookID}>
                       <td>{entry.CashBookID}</td>
-                      <td>{entry.TransactionDate}</td>
+                      <td>{formatDate(entry.TransactionDate)}</td>
                       <td>{entry.VoucherNumber || '-'}</td>
+                      <td>{entry.OppBankIDName || '-'}</td>
                       <td>{entry.TransactionType}</td>
                       <td>{entry.PaymentMode}</td>
                       <td>{entry.Amount.toFixed(2)}</td>

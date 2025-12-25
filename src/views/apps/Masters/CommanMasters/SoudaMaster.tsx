@@ -650,6 +650,11 @@ const SoudaMaster: React.FC = () => {
     katala_readonly: false,
   });
 
+  const formatDate = (date: string | undefined) => {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString();
+  };
+
   const calculateTotals = () => {
     const totalItems = items.reduce((sum, item) => sum + item.qty, 0);
     const totalFarmerAmt = items.reduce((sum, item) => sum + (item.farmerAmt * item.qty), 0);
@@ -1159,7 +1164,7 @@ const SoudaMaster: React.FC = () => {
                     {filteredSoudas.map(souda => (
                       <tr key={souda.SoudaID}>
                         <td>{souda.SoudaID}</td>
-                        <td>{souda.SoudaDate}</td>
+                        <td>{formatDate(souda.SoudaDate)}</td>
                         <td>{souda.SoudaNo}</td>
                         <td>{souda.FarmerName}</td>
                         <td style={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}>

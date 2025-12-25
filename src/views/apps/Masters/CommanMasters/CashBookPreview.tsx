@@ -36,6 +36,14 @@ const CashBookPreview: React.FC<CashBookPreviewProps> = ({
   const previewRef = useRef<HTMLDivElement>(null);
   const [company, setCompany] = useState<any>(null);
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   useEffect(() => {
     const fetchCompany = async () => {
       try {
@@ -378,7 +386,7 @@ const CashBookPreview: React.FC<CashBookPreviewProps> = ({
               <tbody>
                 <tr>
                   <td style={{ ...tdBold, width: "30%" }}>Date:</td>
-                  <td style={td}>{entry.TransactionDate}</td>
+                  <td style={td}>{formatDate(entry.TransactionDate)}</td>
                 </tr>
                 <tr>
                   <td style={tdBold}>Transaction Type:</td>

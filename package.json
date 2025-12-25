@@ -1,8 +1,8 @@
 {
-  "name": "Miracle-Accounts",
+  "name": "Miracle-Subji-Mandi",
   "private": true,
   "version": "1.0.0",
-  "description": "A Product of Miracle Infotech",
+  "description": "Subji Mandi Application",
   "author": "Miracle",
   "main": "main.cjs",
   "homepage": "https://demo.window-admin.pro/",
@@ -174,7 +174,7 @@
   },
   "build": {
     "appId": "com.mipandimandi.app",
-    "productName": "Miracle Accounts",
+    "productName": "Subji Mandi",
     "directories": {
       "output": "dist"
     },
@@ -195,7 +195,6 @@
       "backend/**",
       "backend/node_modules/better-sqlite3/**"
     ],
-   
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico"
@@ -208,8 +207,6 @@
       "installerIcon": "build/icon.ico",
       "uninstallerIcon": "build/icon.ico",
       "installerHeaderIcon": "build/icon.ico",
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
       "shortcutName": "Subji Mandi"
     }
   }

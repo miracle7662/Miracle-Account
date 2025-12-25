@@ -1,3 +1,5 @@
-- [x] Copy test_logo.png to backend/uploads/logo.png
-- [x] Add route in backend/server.js to serve /logo.png
-- [ ] Restart the backend server and test the logo display in sidebar
+- [ ] Add "Ledger Name" column header in the table
+- [ ] Add new <td> for OppBankIDName in table body
+- [ ] Update colSpan in no entries row from 8 to 9
+- [ ] Update exportToPDF to include Ledger Name column
+- [ ] Update exportToExcel to include Ledger Name column
